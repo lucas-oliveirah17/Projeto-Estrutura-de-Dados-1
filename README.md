@@ -205,6 +205,9 @@ na Lista Dinâmica, para o arquivo de dados de forma que não haja <strong>perda
 <h3>Não há a possibilidade de alteração da data de entrega.</h3>
 
 <hr>
+<h4>Fluxograma de execução – Lista de contatos Dinâmica</h4>
+
+![Fluxograma do Projeto](imagens/Fluxograma-Projeto.jpeg)
 
 <h2>Instruções de Colaboração no GitHub para o Projeto</h2>
 
