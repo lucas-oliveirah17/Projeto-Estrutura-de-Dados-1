@@ -22,17 +22,17 @@ por sua vez, recuperará os dados da seção anterior, e assim por diante.</p>
 <h3>Estruturas de dados do Aplicativo</h3>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Seu aplicativo deverá ser baseado no código da estrutura de dados do tipo Lista Dinâmica,
-desenvolvida em sala de aula (REQUISITO). Deverá ter as suas funções que manipulam os dados de
-entrada e saída, devidamente alteradas para que sejam pertinentes e estejam ajustadas aos
+desenvolvida em sala de aula (<strong>REQUISITO</strong>). Deverá ter as suas funções que manipulam os dados de
+entrada e saída, <strong>devidamente alteradas</strong> para que sejam pertinentes e estejam ajustadas aos
 requisitos de seu programa.</p> 
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Não é necessário implementar as funções de manipulação da lista não sejam úteis, tais como
-inserções no início, remoções no final, etc. A ordenação dos elementos na lista deverá ser crescente
-e baseada no atributo (campo) código, portanto, só há a necessidade de se contar com as funções
-de inserção e remoção ordenadas.</p> 
+inserções no início, remoções no final, etc. A ordenação dos elementos na lista deverá ser <strong>crescente</strong>
+e baseada no atributo (campo) código, portanto, só há a <strong>necessidade de se contar com as funções
+de inserção e remoção ordenadas.</strong></p> 
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de gravação e recuperação de dados entre seções, deverá ser implementada
-utilizando o modo gravação binária (REQUISITO), salvando as estruturas (structs) completas, com
+<strong>utilizando o modo gravação binária (REQUISITO)</strong>, salvando as estruturas (<strong>structs</strong>) completas, com
 todos os dados dos clientes.</p> 
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Os nós da Lista Dinâmica deverão ter o formato abaixo para sua utilização na Lista Dinâmica:</p> 
@@ -70,20 +70,20 @@ todos os dados dos clientes.</p>
 <h3>Funcionalidades do Aplicativo – o menu de opções</h3>
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Todas as funcionalidades do seu programa deverão estar implementadas em funções que
-realizarão apenas uma atividade específica por vez. Por exemplo, uma função para realizar a leitura
+realizarão apenas uma <strong>atividade específica por vez</strong>. Por exemplo, uma função para realizar a leitura
 dos dados, uma para armazenamento dos dados em arquivo, uma para impressão em tela, uma para
-edição, etc. Modularize seu programa.</p>
+edição, etc. <strong>Modularize seu programa.</strong></p>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Seu aplicativo deverá contar com um menu, exibido de forma ininterrupta, e que terá suas
+<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Seu aplicativo deverá contar com um menu, exibido de forma <strong>ininterrupta</strong>, e que terá suas
 escolhas acessíveis por números, onde o usuário escolherá a opção que desejar apenas digitando o
 número correspondente.</p>
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Após a execução de cada funcionalidade, o fluxo de execução seu programa deverá retornar
 ao menu reapresentando-o, possibilitando então novas escolhas. O menu deverá contar ainda com
 uma opção específica para encerramento da aplicação, lembrando que neste ponto deve-se tomar o
-cuidado com a perda de dados.</p>
+cuidado com a <strong>perda de dados.</strong></p>
   
-<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;O menu terá que contar no mínimo, com as seguintes opções:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;O menu terá que contar no <strong>mínimo</strong>, com as seguintes opções:</p>
 
 <ul>
   <li>Inserção de novo contato;</li>
@@ -124,8 +124,8 @@ consulta.</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;De forma similar ao anterior, este relatório busca os clientes por nome, sendo também mais
 uma forma de identificação dos clientes na base de dados. Vale ressaltar que nesta função é possível
-encontrar mais de um cliente com o mesmo nome. Neste caso, todos com o mesmo nome devem
-ser exibidos. Um detalhe dever ser observado: A linguagem C é Case Sensitive, tome cuidado com as
+encontrar <strong>mais de um cliente com o mesmo nome</strong>. Neste caso, <strong>todos com o mesmo nome</strong> devem
+ser exibidos. Um detalhe dever ser observado: A linguagem C é <strong>Case Sensitive</strong>, tome cuidado com as
 buscas.</p>
 
 <h4>Edição de dados do contato – busca por identificador</h4>
@@ -135,7 +135,7 @@ disparada pelo fornecimento do código de identificação do cliente.</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Após o cliente ser encontrado na Lista onde está armazenado, seus dados devem ser exibidos
 para confirmação, juntamente com a mensagem se o usuário realmente deseja editar seus dados.
-Em caso afirmativo, a edição deve acontecer enquanto a aplicação ainda exibe os dados antigos por
+Em caso afirmativo, a edição deve acontecer enquanto a <strong>aplicação ainda exibe os dados antigos</strong> por
 uma questão facilitadora para a edição.</p>
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Em caso negativo para a edição, a aplicação deverá simplesmente retornar ao menu principal.</p>
@@ -151,8 +151,8 @@ aplicação retorna ao menu principal.</p>
 <h4>Sair do programa – encerramento com segurança</h4>
  
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Esta opção encerra a execução da aplicação Lista de Contatos. Porém antes do encerramento
-do aplicativo, deve ser executada a rotina para a gravação de todos os dados que estão presentes
-na Lista Dinâmica, para o arquivo de dados de forma que não haja perda de informações.</p>
+do aplicativo, deve ser executada a rotina para a <strong>gravação de todos os dados</strong> que estão presentes
+na Lista Dinâmica, para o arquivo de dados de forma que não haja <strong>perda de informações</strong>.</p>
 
 <hr>
 <h3>Regras:</h3>
@@ -161,20 +161,20 @@ na Lista Dinâmica, para o arquivo de dados de forma que não haja perda de info
   <li>Implementar o código utilizando somente Linguagem C;</li>
   
   <li>Utilizar o código da estrutura de dados do tipo Lista Dinâmica apresentados em sala de aula
-  – vetores convencionais para armazenamento dos dados dos clientes e a não utilização de
-  alocações de memória, códigos de terceiros (pessoas estranhas ao nosso círculo ou Chat GPT),
-  invalidam o projeto;</li>
+  – vetores convencionais para armazenamento dos dados dos clientes e a <strong>não utilização</strong> de
+  alocações de memória, códigos de terceiros (pessoas estranhas ao nosso círculo ou <strong>Chat GPT</strong>),
+  <strong>invalidam</strong> o projeto;</li>
   
   <li>O arquivo de dados salvos da lista de contatos, deverá entregue para avaliação juntamente
   com o aplicativo, possuindo no mínimo 10 registros de clientes previamente gravados para
   os testes funcionais de avaliação;</li>
   
-  <li>Extremamente importante informar, com comentários, o que e como as rotinas (funções)
-  funcionam (lembrem-se: eu não conheço o seu raciocínio, portanto comentem!!!), vale
-  pontos;</li>
+  <li>Extremamente importante informar, com comentários, <strong>o que e como</strong> as rotinas (funções)
+  funcionam (lembrem-se: eu não conheço o seu raciocínio, portanto comentem!!!), <strong>vale
+  pontos</strong>;</li>
   
-  <li>Projetos copiados (e o Trabalho que serviu de fonte - inclusive) terão nota 0 – Lembre-se:
-  todos os projetos de semestres anteriores estão arquivados e serão checados;</li>
+  <li><strong>Projetos copiados (e o Trabalho que serviu de fonte - inclusive) terão nota 0 – Lembre-se:
+  todos os projetos de semestres anteriores estão arquivados e serão checados</strong>;</li>
   
   <li>O projeto será realizado em grupo de no máximo 4 alunos. Os grupos deverão ser informados
   em planilha disponível no Moodle.</li>
@@ -185,7 +185,7 @@ na Lista Dinâmica, para o arquivo de dados de forma que não haja perda de info
 
 <h4></h4>O Trabalho deve ser entregue com:</h4>
 <ul>
-  <li>Todos os arquivos do projeto (executáveis, fontes, bibliotecas, arquivos gerados pela IDE
+  <li><strong>Todos os arquivos do projeto</strong> (executáveis, fontes, bibliotecas, arquivos gerados pela IDE
   CodeBlocks e módulos de funções), todos bem indentados e comentados quando for o caso,
   em data especificada na plataforma AVA/Moodle;</li>
 
@@ -212,10 +212,9 @@ na Lista Dinâmica, para o arquivo de dados de forma que não haja perda de info
 <p>Primeiro, todos os membros do grupo precisam clonar o repositório em suas máquinas locais. Para isso, use o seguinte comando no terminal:</p>
 
 ```bash
-git clone https://github.com/username/repository-name.git
+git clone git@github.com:lucas-oliveirah17/Projeto-Estrutura-de-Dados-1.git
 ```
 
-Substitua `https://github.com/username/repository-name.git` pela URL do seu repositório.
 <p>Isso cria uma cópia local do repositório em seu computador.</p>
 
 <h3>2. Criando e Mudando para uma Nova Branch</h3>
@@ -314,3 +313,11 @@ Então, finalize o processo com um `git push`.
 9. Crie um Pull Request no GitHub.
 10. Revise e aceite Pull Requests.
 11 Mantenha seu repositório local atualizado: git pull origin main.
+
+<hr>
+<h3>Dicas Finais</h3>
+<ul>
+  <li><strong>Comunique-se bem:</strong> Sempre escreva mensagens de commit claras e significativas.</li>
+  <li><strong>Evite trabalhar diretamente na branch main:</strong> Sempre crie uma branch para cada tarefa.</li>
+  <li><strong>Peça revisão:</strong> Antes de mesclar qualquer PR, peça a outros membros do grupo para revisar o código.</li>
+</ul>
