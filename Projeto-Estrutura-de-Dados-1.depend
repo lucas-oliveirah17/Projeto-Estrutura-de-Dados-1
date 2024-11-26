@@ -1,0 +1,13 @@
+# depslib dependency file v1.0
+1732586725 source:z:\meu drive\projetos\projeto-estrutura-de-dados-1\lista_contatos.c
+	<stdio.h>
+	<stdlib.h>
+	"lista_contatos.h"
+
+1732586736 z:\meu drive\projetos\projeto-estrutura-de-dados-1\lista_contatos.h
+
+1732590208 source:z:\meu drive\projetos\projeto-estrutura-de-dados-1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista_contatos.h"
+
