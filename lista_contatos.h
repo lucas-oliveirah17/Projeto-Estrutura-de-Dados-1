@@ -12,6 +12,7 @@ typedef struct cliente{
 /*Ponteiro apontado pelo ponteiro da função main*/
 typedef struct elemento* Lista;
 
+/*
 Lista *criaLista();
 
 void abortaPrograma();
@@ -33,4 +34,4 @@ int consultaPosicao(Lista *li, int posicao, ALUNO *al);
 int consultaMatricula(Lista *li, int mat, ALUNO *al);
 
 ALUNO coletar_dados_aluno();
-
+*/
