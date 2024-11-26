@@ -10,53 +10,96 @@ struct elemento{
 
 typedef struct elemento ELEM;
 
-/*
+
 Lista *criaLista(){
     Lista *li;
-    //Armazenará o endereço do início do bloco alocado,
-    //e será devolvido ao main()
+    //Armazenará o endereço do início do bloco alocado, e será
+    //devolvido ao main()
     li = (Lista*) malloc(sizeof(Lista));
-    //Se alocação ok, preenche o conteúdo que foi
-    //alocado com NULL
+    //Se alocação ok, preenche o conteúdo que foi alocado com NULL
+    //
     if(li != NULL) {
         *li = NULL;
     }
     return li;
 }
 
+void apagaLista(Lista *li){
+    //Recebe o endereço da lista na memória Lista será válida se li
+    //for diferente de NULL
+    if(li != NULL){
+        ELEM *no;
+        //Enquanto o primeiro elemento da lista não for diferente de
+        //NULL, a lista não estará vazia. while: executa este conjunto
+        //de instruções, até que a cabeça da lista aponte para NULL, e
+        //assim a lista estará vazia.
+        while((*li) != NULL){
+            no = *li;
+            //Inicio da lista, aponta para próximo elemento da lista
+            *li = (*li)->prox;
+            free(no);
+        }
+        //Ao final, libera a cabeça da lista (ponteiro especial) que
+        //aponta para o ínicio
+        free(li);
+    }
+}
+
 void abortaPrograma(){
-    //Em cada função que acessa diretamente a lista, é
-    //absolutamente necessário testar se a mesma foi
-    //alocada
+    //Em cada função que acessa diretamente a lista, é absolutamente
+    //necessário testar se a mesma foi alocada
     printf("ERRO! Lista nao foi alocada, ");
     printf("programa sera encerrado...\n\n\n");
     system("PAUSE");
     exit(1);
 }
 
-void apagaLista(Lista *li){
-    //Recebe o endereço da lista na memória
-    //Lista será válida se li for diferente de NULL
-    if(li != NULL){
-        ELEM *no;
-        //Enquanto o primeiro elemento da lista não
-        //for diferente de NULL, a lista não estará vazia.
-        //while: executa este conjunto de instruções, até
-        //que a cabeça da lista aponte para NULL, e assim a
-        //lista estará vazia.
-        while((*li) != NULL){
-            no = *li;
-            //Inicio da lista, aponta para próximo elemento
-            //da lista
-            *li = (*li)->prox;
-            free(no);
-        }
-        //Ao final, libera a cabeça da lista (ponteiro especial)
-        //que aponta para o ínicio
-        free(li);
+int listaVazia(Lista *li){
+    if(li == NULL){
+        //Se a lista não foi alocada, ou seja, li for igual a NULL o
+        //programa é então abortado.
+        abortaPrograma();
     }
+    //Se no endereço que *li aponta, estiver armazenado NULL, ainda não
+    //existe nenhum elemento dentro da lista.
+    if(*li == NULL){
+        return 1;
+    }
+    return 0;
 }
 
+int insereOrdenado(Lista *li, CLIENTE cl){
+    if(li == NULL){ // Verifica se lista foi alocada
+        abortaPrograma();
+    }
+    ELEM *no = (ELEM*) malloc(sizeof(ELEM)); //Aloca um no auxiliar
+    if(no == NULL){ //Interrompe o programa se alocação falha
+        return 0;
+    }
+    no->dados = cl;
+    if(listaVazia(li)){ // Verifica se lista está vazia
+        no->prox = (*li);
+        *li = no;
+        return cl.codigo;
+    }else{
+        ELEM *ant, *atual = *li;
+        while(atual != NULL && atual->dados.codigo < cl.codigo){
+            ant = atual;
+            atual = atual->prox;
+        }
+        //Insere se estiver na primeira posição
+        if(atual == *li){
+            no->prox = (*li);
+            *li = no;
+        }else{
+            //Insere em qualquer outra posição
+            no->prox = ant->prox;
+            ant->prox = no;
+        }
+        return cl.codigo;
+    }
+}
+/*
 int tamanhoLista(Lista *li) {
     if(li == NULL){
         abortaPrograma();
@@ -90,52 +133,6 @@ int listaCheia(Lista *li){
         abortaPrograma();
     }
     return 0;
-}
-
-int listaVazia(Lista *li){
-    if(li == NULL){
-        //Se a lista não foi alocada, ou seja, li for igual
-        //a NULL o programa é então abortado.
-        abortaPrograma();
-    }
-    //Se no endereço que *li aponta, estiver armazenado NULL,
-    //ainda não existe nenhum elemento dentro da lista.
-    if(*li == NULL){
-        return 1;
-    }
-    return 0;
-}
-
-int insereOrdenado(Lista *li, ALUNO al){
-    if(li == NULL){
-        abortaPrograma();
-    }
-    ELEM *no = (ELEM*) malloc(sizeof(ELEM));
-    if(no == NULL){
-        return 0;
-    }
-    no->dados = al;
-    if(listaVazia(li)){
-        no->prox = (*li);
-        *li = no;
-        return al.matricula;
-    }else{
-        ELEM *ant, *atual = *li;
-        while(atual != NULL && atual->dados.matricula < al.matricula){
-            ant = atual;
-            atual = atual->prox;
-        }
-        //Insere se estiver na primeira posição
-        if(atual == *li){
-            no->prox = (*li);
-            *li = no;
-        }else{
-            //Insere em qualquer outra posição
-            no->prox = ant->prox;
-            ant->prox = no;
-        }
-        return al.matricula;
-    }
 }
 
 int removeOrdenado(Lista *li, int mat){
