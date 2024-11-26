@@ -12,20 +12,25 @@ typedef struct cliente{
 /*Ponteiro apontado pelo ponteiro da função main*/
 typedef struct elemento* Lista;
 
+
+Lista *criaLista(); //Aloca memória para a lista
+
+void apagaLista(Lista *li); //Função que destrói a lista alocada.
+
+void abortaPrograma(); //Aborta o programa se lista não alocada
+
+int listaVazia(Lista *li);
+
+int insereOrdenado(Lista *li, CLIENTE cl);
+
 /*
-Lista *criaLista();
-
-void abortaPrograma();
-
-void apagaLista(Lista *li); //Essa função deve ser a última a ser chamada pelo main()
-
 int tamanhoLista(Lista *li);
 
 int listaCheia(Lista *li);
 
-int listaVazia(Lista *li);
 
-int insereOrdenado(Lista *li, ALUNO al);
+
+
 
 int removeOrdenado(Lista *li, int mat);
 
