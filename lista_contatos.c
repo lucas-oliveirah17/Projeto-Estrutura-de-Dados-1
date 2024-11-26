@@ -99,6 +99,28 @@ int insereOrdenado(Lista *li, CLIENTE cl){
         return cl.codigo;
     }
 }
+
+int consultaCodigo(Lista *li, int cod, CLIENTE *cl){
+    if(li == NULL){
+        abortaPrograma();
+    }
+    ELEM *no = *li;
+    //PEnquanto nó for diferente de NULL, e a matricula na lista for diferente
+    //da matricula que procuro...
+    while(no != NULL && no->dados.codigo != cod){
+        no = no->prox;
+    }
+    if(no == NULL){
+        //Se ao final da busca, nó for igual a NULL< significa que o elemento
+        // buscado não existe na lista, ou a mesma está vazia
+        return 0;
+    }else{
+        //Se nó diferente de NULL, significa que o elemento buscado foi
+        //encontrado, e então, é só copiar seu conteúdo
+        *cl = no->dados;
+        return 1;
+    }
+}
 /*
 int tamanhoLista(Lista *li) {
     if(li == NULL){
@@ -185,29 +207,6 @@ int consultaPosicao(Lista *li, int posicao, ALUNO *al){
         //Mas se nó é diferente de NULL, siginifica que nó está
         //apontando para o elemento procurado, e então, é só copiar
         //os dados do elemento.
-        *al = no->dados;
-        return 1;
-    }
-}
-
-int consultaMatricula(Lista *li, int mat, ALUNO *al){
-    if(li == NULL){
-        abortaPrograma();
-    }
-    ELEM *no = *li;
-    //PEnquanto nó for diferente de NULL, e a matricula na lista
-    //for diferente da matricula que procuro...
-    while(no != NULL && no->dados.matricula != mat){
-        no = no->prox;
-    }
-    if(no == NULL){
-        //Se ao final da busca, nó for igual a NULL< significa que
-        //o elemento buscado não existe na lista, ou a mesma está
-        //vazia
-        return 0;
-    }else{
-        //Se nó diferente de NULL, significa que o elemento buscado
-        //foi encontrado, e então, é só copiar seu conteúdo
         *al = no->dados;
         return 1;
     }

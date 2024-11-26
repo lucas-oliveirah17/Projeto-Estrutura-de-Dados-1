@@ -19,9 +19,11 @@ void apagaLista(Lista *li); //Função que destrói a lista alocada.
 
 void abortaPrograma(); //Aborta o programa se lista não alocada
 
-int listaVazia(Lista *li);
+int listaVazia(Lista *li); // Verifica se lista está vazia
 
-int insereOrdenado(Lista *li, CLIENTE cl);
+int insereOrdenado(Lista *li, CLIENTE cl); // Insere ordenado, um novo contato
+
+int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por código na lista
 
 /*
 int tamanhoLista(Lista *li);
@@ -36,7 +38,7 @@ int removeOrdenado(Lista *li, int mat);
 
 int consultaPosicao(Lista *li, int posicao, ALUNO *al);
 
-int consultaMatricula(Lista *li, int mat, ALUNO *al);
+
 
 ALUNO coletar_dados_aluno();
 */
