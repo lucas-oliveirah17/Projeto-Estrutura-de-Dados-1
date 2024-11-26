@@ -99,6 +99,31 @@ int insereOrdenado(Lista *li, CLIENTE cl){
         return cl.codigo;
     }
 }
+
+void apresentaClientes(Lista li){
+    // Verifica se a lista esta vazia
+    if(li == NULL){
+        printf("\n** Sem Contatos Existentes!! **\n\n");
+        return ;
+    }
+
+    printf("Listagem Total dos Usuarios Cadastrados:\n");
+
+    // Apresenta os clientes cadastrados
+    while(li != NULL){
+        printf("|************************************************************************\n");
+        printf("|*|Codigo: %d\n", li->dados.codigo);
+        printf("|*|Nome: %s", li->dados.nome);
+        printf("|*|Empresa: %s", li->dados.empresa);
+        printf("|*|Departemento: %s", li->dados.departamento);
+        printf("|*|Telefone: %s", li->dados.telefone);
+        printf("|*|Celular: %s", li->dados.celular);
+        printf("|*|E-mail: %s", li->dados.email);
+        printf("|************************************************************************\n");
+        li = li->prox;
+    }
+}
+
 /*
 int tamanhoLista(Lista *li) {
     if(li == NULL){

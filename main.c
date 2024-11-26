@@ -70,6 +70,9 @@ int main()
 
             case 2: // Exibir todos os contatos
                 printf("\nOpcao 2 selecionada.\n"); // Para debugg
+
+                apresentaClientes(*li);
+
                 break;
 
             case 3: // Buscar contato [Codigo]
