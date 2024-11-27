@@ -12,7 +12,6 @@ typedef struct cliente{
 /*Ponteiro apontado pelo ponteiro da função main*/
 typedef struct elemento* Lista;
 
-
 Lista *criaLista(); //Aloca memória para a lista
 
 void apagaLista(Lista *li); //Função que destrói a lista alocada.
@@ -25,6 +24,7 @@ int insereOrdenado(Lista *li, CLIENTE cl); // Insere ordenado, um novo contato
 
 int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por código na lista
 
+void apresentaClientes(Lista li);
 /*
 int tamanhoLista(Lista *li);
 

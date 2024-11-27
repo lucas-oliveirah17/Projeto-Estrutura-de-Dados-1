@@ -29,11 +29,13 @@ requisitos de seu programa.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Não é necessário implementar as funções de manipulação da lista não sejam úteis, tais como
 inserções no início, remoções no final, etc. A ordenação dos elementos na lista deverá ser <strong>crescente</strong>
 e baseada no atributo (campo) código, portanto, só há a <strong>necessidade de se contar com as funções
-de inserção e remoção ordenadas.</strong></p> 
+de inserção e remoção ordenadas</strong>. Ainda com relação ao atributo código, não deve ser
+utilizado o incremento automático, e uma verificação de duplicidade deve ser realizada durante as
+inserções de novos clientes.</p> 
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;A funcionalidade de gravação e recuperação de dados entre seções, deverá ser implementada
 <strong>utilizando o modo gravação binária (REQUISITO)</strong>, salvando as estruturas (<strong>structs</strong>) completas, com
-todos os dados dos clientes.</p> 
+todos os dados dos clientes. Isso torna a recuperação dos dados mais simples.</p> 
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Os nós da Lista Dinâmica deverão ter o formato abaixo para sua utilização na Lista Dinâmica:</p> 
 
@@ -44,7 +46,7 @@ todos os dados dos clientes.</p>
   </tr>
   <tr>
     <td>Código</td>
-    <td rowspan="7">Ponteiro para a<br>próxima<br>estrutura</td>
+    <td rowspan="7"">Ponteiro para a<br>próxima<br>estrutura</td>
   </tr>
   <tr>
     <td>Nome</td>
@@ -72,13 +74,13 @@ todos os dados dos clientes.</p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Todas as funcionalidades do seu programa deverão estar implementadas em funções que
 realizarão apenas uma <strong>atividade específica por vez</strong>. Por exemplo, uma função para realizar a leitura
 dos dados, uma para armazenamento dos dados em arquivo, uma para impressão em tela, uma para
-edição, etc. <strong>Modularize seu programa.</strong></p>
+edição, etc. <strong>Modularize</strong> seu programa.</p>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Seu aplicativo deverá contar com um menu, exibido de forma <strong>ininterrupta</strong>, e que terá suas
 escolhas acessíveis por números, onde o usuário escolherá a opção que desejar apenas digitando o
-número correspondente.</p>
+número correspondente e confirmar teclando <em>enter</em>.</p>
   
-<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Após a execução de cada funcionalidade, o fluxo de execução seu programa deverá retornar
+<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Após finalização da execução de cada funcionalidade, o fluxo de execução seu programa deverá retornar
 ao menu reapresentando-o, possibilitando então novas escolhas. O menu deverá contar ainda com
 uma opção específica para encerramento da aplicação, lembrando que neste ponto deve-se tomar o
 cuidado com a <strong>perda de dados.</strong></p>
@@ -86,7 +88,7 @@ cuidado com a <strong>perda de dados.</strong></p>
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;O menu terá que contar no <strong>mínimo</strong>, com as seguintes opções:</p>
 
 <ul>
-  <li>Inserção de novo contato;</li>
+  <li>Inserção de novo contato, verificando a duplicidade de códigos (não pode haver dois iguais);</li>
   <li>Gerar e exibir relatório de contatos em forma de lista total</li>
   <li>Gerar e exibir relatório individual com busca por identificador (código);</li>
   <li>Gerar e exibir relatório com busca por nome (neste caso exibir todos que tenham o mesmo
@@ -94,8 +96,8 @@ cuidado com a <strong>perda de dados.</strong></p>
   nome);</li>
   <li>Edição de dados do contato, escolhido por identificador;</li>
   <li>Remover contato, escolhido por identificador;</li>
-  <li>Sair e encerrar o programa, porém, salvando toda a lista para posterior nova seção de
-  trabalho, antes de seu encerramento.</li>
+  <li>Sair e encerrar o programa, porém, antes de sua efetiva finalização, salvando toda a lista para posterior nova seção de
+  trabalho.</li>
 </ul>
 
 <hr>
@@ -103,9 +105,13 @@ cuidado com a <strong>perda de dados.</strong></p>
   
 <h4>Inserção de novo contato</h4>
 
-<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Esta opção do menu tratará da inserção de novos clientes na aplicação. Seus dados serão
-armazenados na estrutura especifica do “cliente”, que então no momento da inserção na Lista será
-atribuída a parte de dados (do nó), que fará parte da Lista Dinâmica.</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;Esta opção do menu tratará da inserção de novos clientes na aplicação. Antes da inserção,
+uma busca deverá ser realizada na lista de contatos a procura de identificadores (código) duplicados.
+Caso haja um cliente que possua o mesmo código já existente na lista, isso deverá ser informado ao
+usuário para que mude-o ou então aborte a inserção. Estando validado o código (confirmação de não
+duplicidade), seus dados deverão ser armazenados na estrutura especifica do “cliente”, que então
+no momento da inserção na Lista será atribuída a parte de dados (do nó), que fará parte da Lista
+Dinâmica.</p>
 
 <h4>Geração de relatório – Lista Total</h4>
 
@@ -119,13 +125,12 @@ clientes, para posterior utilização em outras funcionalidades.</p>
 Informa-se o código de identificação, e então a aplicação exibe todos os dados daquele cliente para
 consulta.</p>
 
-<hr>
 <h4>Geração de relatório – busca por nome</h4>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;De forma similar ao anterior, este relatório busca os clientes por nome, sendo também mais
 uma forma de identificação dos clientes na base de dados. Vale ressaltar que nesta função é possível
 encontrar <strong>mais de um cliente com o mesmo nome</strong>. Neste caso, <strong>todos com o mesmo nome</strong> devem
-ser exibidos. Um detalhe dever ser observado: A linguagem C é <strong>Case Sensitive</strong>, tome cuidado com as
+ser exibidos. Um detalhe dever ser observado: A linguagem C é <em><strong>Case Sensitive</strong></em>, tome cuidado com as
 buscas.</p>
 
 <h4>Edição de dados do contato – busca por identificador</h4>
@@ -144,7 +149,7 @@ uma questão facilitadora para a edição.</p>
   
 <p>&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;O funcionamento desta opção do menu é similar ao anterior. A aplicação executará uma
 busca pelo código de identificação do cliente armazenado na lista dinâmica, e em seguida exibirá os
-dados do cliente em tela. Na sequência exibe mensagem solicitando a confirmação de exclusão. Em
+dados do cliente em tela. Na sequência deverá exibir uma mensagem solicitando a confirmação de exclusão. Em
 caso afirmativo, remove-o da Lista; em caso negativo nada realiza. Ao término de ambos os casos, a
 aplicação retorna ao menu principal.</p>
 
@@ -161,31 +166,32 @@ na Lista Dinâmica, para o arquivo de dados de forma que não haja <strong>perda
   <li>Implementar o código utilizando somente Linguagem C;</li>
   
   <li>Utilizar o código da estrutura de dados do tipo Lista Dinâmica apresentados em sala de aula
-  – vetores convencionais para armazenamento dos dados dos clientes e a <strong>não utilização</strong> de
+  – vetores convencionais para armazenamento dos dados dos clientes, a <strong>não utilização</strong> de
   alocações de memória, códigos de terceiros (pessoas estranhas ao nosso círculo ou <strong>Chat GPT</strong>),
   <strong>invalidam</strong> o projeto;</li>
   
   <li>O arquivo de dados salvos da lista de contatos, deverá entregue para avaliação juntamente
   com o aplicativo, possuindo no mínimo 10 registros de clientes previamente gravados para
-  os testes funcionais de avaliação;</li>
+  os testes funcionais de avaliação, assim como todos os arquivos gerados pela IDE CodeBlocks;</li>
   
   <li>Extremamente importante informar, com comentários, <strong>o que e como</strong> as rotinas (funções)
   funcionam (lembrem-se: eu não conheço o seu raciocínio, portanto comentem!!!), <strong>vale
   pontos</strong>;</li>
   
   <li><strong>Projetos copiados (e o Trabalho que serviu de fonte - inclusive) terão nota 0 – Lembre-se:
-  todos os projetos de semestres anteriores estão arquivados e serão checados</strong>;</li>
+  todos os projetos de semestres anteriores estão arquivados e serão checados, além de
+serem diferentes entre si</strong>;</li>
   
-  <li>O projeto será realizado em grupo de no máximo 4 alunos. Os grupos deverão ser informados
+  <li>O projeto será realizado no máximo em duplas, que deverão ser informadas
   em planilha disponível no Moodle.</li>
 
   <li>Use o bom senso, faça o simples não complique! Implemente uma funcionalidade por vez,
   facilitando assim a correção dos possíveis erros durante o seu desenvolvimento.</li>
 </ul>
 
-<h4></h4>O Trabalho deve ser entregue com:</h4>
+<h4>O Trabalho deve ser entregue com:</h4>
 <ul>
-  <li><strong>Todos os arquivos do projeto</strong> (executáveis, fontes, bibliotecas, arquivos gerados pela IDE
+  <li><strong>Todos os arquivos do projeto</strong> (executáveis, fontes, bibliotecas, <strong>TODOS</strong> os arquivos gerados pela IDE
   CodeBlocks e módulos de funções), todos bem indentados e comentados quando for o caso,
   em data especificada na plataforma AVA/Moodle;</li>
 
@@ -194,7 +200,7 @@ na Lista Dinâmica, para o arquivo de dados de forma que não haja <strong>perda
 
   <li style="list-style-type: none;">
     <ul>
-      <li>Nome e prontuário dos integrantes do grupo.</li>
+      <li>Nome e prontuário dos integrantes da dupla.</li>
       <li>As decisões de implementação tomadas, uma visão geral do funcionamento do
       programa, resultado dos testes, quais foram os problemas, e como foram resolvidos,
       etc.</li>
@@ -305,17 +311,21 @@ Então, finalize o processo com um `git push`.
 
 <hr>
 <h3>Resumo do Fluxo de Trabalho</h3>
-1. Clone o repositório.
-2. Crie uma nova branch: git checkout -b nome-da-branch.
-3. Faça as alterações.
-4. Verifique o status: git status.
-5. Adicione os arquivos: git add ..
-6. Comite as alterações: git commit -m "Descrição das alterações".
-7. Puxe as últimas alterações da branch principal: git pull origin main.
-8. Envie suas alterações para o GitHub: git push origin nome-da-branch.
-9. Crie um Pull Request no GitHub.
-10. Revise e aceite Pull Requests.
-11 Mantenha seu repositório local atualizado: git pull origin main.
+<ol>
+  <li>Clone o repositório</li>
+  
+  <li>Crie uma nova branch: git checkout -b nome-da-branch</li>
+  
+  <li>Faça as alterações</li>
+  <li>Verifique o status: git status</li>
+  <li>Adicione os arquivos: git add .</li>
+  <li>Comite as alterações: git commit -m "Descrição das alterações"</li>
+  <li>Puxe as últimas alterações da branch principal: git pull origin main</li>
+  <li>Envie suas alterações para o GitHub: git push origin nome-da-branch</li>
+  <li>Crie um Pull Request no GitHub</li>
+  <li>Revise e aceite Pull Requests</li>
+  <li>Mantenha seu repositório local atualizado: git pull origin main</li>
+</ol>
 
 <hr>
 <h3>Dicas Finais</h3>

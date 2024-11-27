@@ -13,10 +13,10 @@ typedef struct elemento ELEM;
 
 Lista *criaLista(){
     Lista *li;
-    //Armazenará o endereço do início do bloco alocado, e será
+    //ArmazenarÃ¡ o endereÃ§o do inÃ­cio do bloco alocado, e serÃ¡
     //devolvido ao main()
     li = (Lista*) malloc(sizeof(Lista));
-    //Se alocação ok, preenche o conteúdo que foi alocado com NULL
+    //Se alocaÃ§Ã£o ok, preenche o conteÃºdo que foi alocado com NULL
     //
     if(li != NULL) {
         *li = NULL;
@@ -25,29 +25,29 @@ Lista *criaLista(){
 }
 
 void apagaLista(Lista *li){
-    //Recebe o endereço da lista na memória Lista será válida se li
+    //Recebe o endereÃ§o da lista na memÃ³ria Lista serÃ¡ vÃ¡lida se li
     //for diferente de NULL
     if(li != NULL){
         ELEM *no;
-        //Enquanto o primeiro elemento da lista não for diferente de
-        //NULL, a lista não estará vazia. while: executa este conjunto
-        //de instruções, até que a cabeça da lista aponte para NULL, e
-        //assim a lista estará vazia.
+        //Enquanto o primeiro elemento da lista nÃ£o for diferente de
+        //NULL, a lista nÃ£o estarÃ¡ vazia. while: executa este conjunto
+        //de instruÃ§Ãµes, atÃ© que a cabeÃ§a da lista aponte para NULL, e
+        //assim a lista estarÃ¡ vazia.
         while((*li) != NULL){
             no = *li;
-            //Inicio da lista, aponta para próximo elemento da lista
+            //Inicio da lista, aponta para prÃ³ximo elemento da lista
             *li = (*li)->prox;
             free(no);
         }
-        //Ao final, libera a cabeça da lista (ponteiro especial) que
-        //aponta para o ínicio
+        //Ao final, libera a cabeÃ§a da lista (ponteiro especial) que
+        //aponta para o Ã­nicio
         free(li);
     }
 }
 
 void abortaPrograma(){
-    //Em cada função que acessa diretamente a lista, é absolutamente
-    //necessário testar se a mesma foi alocada
+    //Em cada funÃ§Ã£o que acessa diretamente a lista, Ã© absolutamente
+    //necessÃ¡rio testar se a mesma foi alocada
     printf("ERRO! Lista nao foi alocada, ");
     printf("programa sera encerrado...\n\n\n");
     system("PAUSE");
@@ -56,11 +56,11 @@ void abortaPrograma(){
 
 int listaVazia(Lista *li){
     if(li == NULL){
-        //Se a lista não foi alocada, ou seja, li for igual a NULL o
-        //programa é então abortado.
+        //Se a lista nÃ£o foi alocada, ou seja, li for igual a NULL o
+        //programa Ã© entÃ£o abortado.
         abortaPrograma();
     }
-    //Se no endereço que *li aponta, estiver armazenado NULL, ainda não
+    //Se no endereÃ§o que *li aponta, estiver armazenado NULL, ainda nÃ£o
     //existe nenhum elemento dentro da lista.
     if(*li == NULL){
         return 1;
@@ -73,11 +73,11 @@ int insereOrdenado(Lista *li, CLIENTE cl){
         abortaPrograma();
     }
     ELEM *no = (ELEM*) malloc(sizeof(ELEM)); //Aloca um no auxiliar
-    if(no == NULL){ //Interrompe o programa se alocação falha
+    if(no == NULL){ //Interrompe o programa se alocaÃ§Ã£o falha
         return 0;
     }
     no->dados = cl;
-    if(listaVazia(li)){ // Verifica se lista está vazia
+    if(listaVazia(li)){ // Verifica se lista estÃ¡ vazia
         no->prox = (*li);
         *li = no;
         return cl.codigo;
@@ -87,12 +87,12 @@ int insereOrdenado(Lista *li, CLIENTE cl){
             ant = atual;
             atual = atual->prox;
         }
-        //Insere se estiver na primeira posição
+        //Insere se estiver na primeira posiÃ§Ã£o
         if(atual == *li){
             no->prox = (*li);
             *li = no;
         }else{
-            //Insere em qualquer outra posição
+            //Insere em qualquer outra posiÃ§Ã£o
             no->prox = ant->prox;
             ant->prox = no;
         }
@@ -105,38 +105,63 @@ int consultaCodigo(Lista *li, int cod, CLIENTE *cl){
         abortaPrograma();
     }
     ELEM *no = *li;
-    //PEnquanto nó for diferente de NULL, e a matricula na lista for diferente
+    //PEnquanto nÃ³ for diferente de NULL, e a matricula na lista for diferente
     //da matricula que procuro...
     while(no != NULL && no->dados.codigo != cod){
         no = no->prox;
     }
     if(no == NULL){
-        //Se ao final da busca, nó for igual a NULL< significa que o elemento
-        // buscado não existe na lista, ou a mesma está vazia
+        //Se ao final da busca, nÃ³ for igual a NULL< significa que o elemento
+        // buscado nÃ£o existe na lista, ou a mesma estÃ¡ vazia
         return 0;
     }else{
-        //Se nó diferente de NULL, significa que o elemento buscado foi
-        //encontrado, e então, é só copiar seu conteúdo
+        //Se nÃ³ diferente de NULL, significa que o elemento buscado foi
+        //encontrado, e entÃ£o, Ã© sÃ³ copiar seu conteÃºdo
         *cl = no->dados;
         return 1;
     }
 }
+
+void apresentaClientes(Lista li){
+    // Verifica se a lista esta vazia
+    if(li == NULL){
+        printf("\n** Sem Contatos Existentes!! **\n\n");
+        return ;
+    }
+
+    printf("Listagem Total dos Usuarios Cadastrados:\n");
+
+    // Apresenta os clientes cadastrados
+    while(li != NULL){
+        printf("|************************************************************************\n");
+        printf("|*|Codigo: %d\n", li->dados.codigo);
+        printf("|*|Nome: %s", li->dados.nome);
+        printf("|*|Empresa: %s", li->dados.empresa);
+        printf("|*|Departemento: %s", li->dados.departamento);
+        printf("|*|Telefone: %s", li->dados.telefone);
+        printf("|*|Celular: %s", li->dados.celular);
+        printf("|*|E-mail: %s", li->dados.email);
+        printf("|************************************************************************\n");
+        li = li->prox;
+    }
+}
+
 /*
 int tamanhoLista(Lista *li) {
     if(li == NULL){
         abortaPrograma();
     }
     int acum = 0;
-    //nó é um ponteiro auxiliar e recebe o 1º elemento da
-    //Lista. nó foi criado para se preservar o inicio da
-    //lista, porque se andarmos com a cabeça da lista,
-    //perderemos seu endereço de início. Sempre percorremos
-    //uma lista com elementos auxiliares, para não perdermos
-    //informações
+    //nÃ³ Ã© um ponteiro auxiliar e recebe o 1Âº elemento da
+    //Lista. nÃ³ foi criado para se preservar o inicio da
+    //lista, porque se andarmos com a cabeÃ§a da lista,
+    //perderemos seu endereÃ§o de inÃ­cio. Sempre percorremos
+    //uma lista com elementos auxiliares, para nÃ£o perdermos
+    //informaÃ§Ãµes
     ELEM *no = *li;
     while(no != NULL){
-        //Enquanto nó não for NULL, incrementa o acumulador e
-        //se desloca para o próximo nó.
+        //Enquanto nÃ³ nÃ£o for NULL, incrementa o acumulador e
+        //se desloca para o prÃ³ximo nÃ³.
         acum++;
         no = no->prox;
     }
@@ -146,9 +171,9 @@ int tamanhoLista(Lista *li) {
 }
 
 int listaCheia(Lista *li){
-    //Em Listas Ligadas (dinâmicas encadeadas), não
+    //Em Listas Ligadas (dinÃ¢micas encadeadas), nÃ£o
     //existe o conceito de lista cheia.
-    //Esta função é mantida apenas por questões de
+    //Esta funÃ§Ã£o Ã© mantida apenas por questÃµes de
     //compatibilidade com outras estruturas do tipo
     //Lista.
     if(li == NULL){
@@ -163,22 +188,22 @@ int removeOrdenado(Lista *li, int mat){
         abortaPrograma();
     }
     ELEM *ant, *no = *li;
-    //Não é necessário testar se a lista está vazia para
+    //NÃ£o Ã© necessÃ¡rio testar se a lista estÃ¡ vazia para
     //remover, o while faz esse tratamento, quando testa se
     //no != NULL.
     while(no != NULL && no->dados.matricula != mat){
         ant = no;
         no = no->prox;
     }
-    //Se o nó está parado na primeira posição, significa que
-    //a lista não foi percorrida. É o caso em que o elemento a
-    //ser removido é menor do que todos os outros na lista.
+    //Se o nÃ³ estÃ¡ parado na primeira posiÃ§Ã£o, significa que
+    //a lista nÃ£o foi percorrida. Ã‰ o caso em que o elemento a
+    //ser removido Ã© menor do que todos os outros na lista.
     if(no == *li){
         *li = no->prox;
     }else{
         ant->prox = no->prox;
     }
-    //Remove no inínicio, meio e fim.
+    //Remove no inÃ­nicio, meio e fim.
     matricula = no->dados.matricula;
     free(no);
     return matricula;
@@ -200,12 +225,12 @@ int consultaPosicao(Lista *li, int posicao, ALUNO *al){
         i++;
     }
     if(no == NULL){
-        //Se nó for igual a NULL, o elemento não foi encontrado
-        //(posição não existe), ou lista estava vazia.
+        //Se nÃ³ for igual a NULL, o elemento nÃ£o foi encontrado
+        //(posiÃ§Ã£o nÃ£o existe), ou lista estava vazia.
         return 0;
     }else{
-        //Mas se nó é diferente de NULL, siginifica que nó está
-        //apontando para o elemento procurado, e então, é só copiar
+        //Mas se nÃ³ Ã© diferente de NULL, siginifica que nÃ³ estÃ¡
+        //apontando para o elemento procurado, e entÃ£o, Ã© sÃ³ copiar
         //os dados do elemento.
         *al = no->dados;
         return 1;
@@ -214,28 +239,28 @@ int consultaPosicao(Lista *li, int posicao, ALUNO *al){
 
 ALUNO coletar_dados_aluno(){
     ALUNO al;
-    printf("\nMatrícula: ");
+    printf("\nMatrÃ­cula: ");
     scanf("%d", &al.matricula);
 
     do{
         printf("Nota 1: ");
         scanf("%f", &al.n1);
         if(al.n1 < 0 || al.n1 > 10)
-            printf("Valor inválido! Somente valor de 0 à 10 são aceitos.\n");
+            printf("Valor invÃ¡lido! Somente valor de 0 Ã  10 sÃ£o aceitos.\n");
     }while(!(al.n1 >= 0 && al.n1 <= 10));
 
     do{
         printf("Nota 2: ");
         scanf("%f", &al.n2);
         if(al.n2 < 0 || al.n2 > 10)
-            printf("Valor inválido! Somente valor de 0 à 10 são aceitos.\n");
+            printf("Valor invÃ¡lido! Somente valor de 0 Ã  10 sÃ£o aceitos.\n");
     }while(!(al.n2 >= 0 && al.n2 <= 10));
 
     do{
         printf("Nota 3: ");
         scanf("%f", &al.n3);
         if(al.n3 < 0 || al.n3 > 10)
-            printf("Valor inválido! Somente valor de 0 à 10 são aceitos.\n");
+            printf("Valor invÃ¡lido! Somente valor de 0 Ã  10 sÃ£o aceitos.\n");
     }while(!(al.n3 >= 0 && al.n3 <= 10));
     return al;
 }
