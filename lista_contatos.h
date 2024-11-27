@@ -25,6 +25,8 @@ int insereOrdenado(Lista *li, CLIENTE cl); // Insere ordenado, um novo contato
 int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por código na lista
 
 void apresentaClientes(Lista li);
+
+void imprimirContato(CLIENTE cl); // Rotina para a impressão das informações de contato
 /*
 int tamanhoLista(Lista *li);
 
