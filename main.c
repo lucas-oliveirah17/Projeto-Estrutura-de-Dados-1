@@ -5,7 +5,7 @@
 int main()
 {
     int option; //Para as opções do menu
-    int codigo; // Para inserção de dados número pelo usuário
+    int codigo; // Para pesquisa de contato por codigo
     int x; //Para código de erro
     Lista *li; //Ponteiro para a lista
     CLIENTE novo_contato; //Para inserção de dados do novo contato
@@ -78,21 +78,12 @@ int main()
                 break;
 
             case 3: // Buscar contato [Codigo]
-                printf("\nOpcao 3 selecionada.\n"); // Para debugg
                 do{
-                    printf("Buscar contato por codigo: ");
+                    printf("Buscar contato de codigo: ");
                     scanf("%d", &codigo);
                     x = consultaCodigo(li, codigo, &consulta_contato);
                     if(x){
-                        printf("\nConsulta contato de codigo %d", consulta_contato.codigo);
-                        printf("\n\nNOVO CONTATO:");
-                        printf("\nCodigo: %d", consulta_contato.codigo);
-                        printf("\nNome: %s", consulta_contato.nome);
-                        printf("Empresa: %s", consulta_contato.empresa);
-                        printf("Departamento: %s", consulta_contato.departamento);
-                        printf("Telefone: %s", consulta_contato.telefone);
-                        printf("Celular: %s", consulta_contato.celular);
-                        printf("Email: %s\n", consulta_contato.email);
+                        imprimirContato(consulta_contato);
                         option = -3;
                     }else{
                         printf("\nCodigo nao encontrado.");

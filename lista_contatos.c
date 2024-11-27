@@ -146,6 +146,18 @@ void apresentaClientes(Lista li){
     }
 }
 
+void imprimirContato(CLIENTE cl){ // Rotina para a impressão das informações de contato
+    printf("\n|************************************************************|");
+    printf("\n Codigo: %d", cl.codigo);
+    printf("\n Nome: %s", cl.nome);
+    printf(" Empresa: %s", cl.empresa);
+    printf(" Departamento: %s", cl.departamento);
+    printf(" Telefone: %s", cl.telefone);
+    printf(" Celular: %s", cl.celular);
+    printf(" Email: %s", cl.email);
+    printf("|************************************************************|\n");
+};
+
 /*
 int tamanhoLista(Lista *li) {
     if(li == NULL){
