@@ -5,9 +5,11 @@
 int main()
 {
     int option; //Para as opções do menu
+    int codigo; // Para inserção de dados número pelo usuário
     int x; //Para código de erro
     Lista *li; //Ponteiro para a lista
     CLIENTE novo_contato; //Para inserção de dados do novo contato
+    CLIENTE consulta_contato; //Para Consulta de dados de contatos da lista
 
     li = criaLista();
     if(li == NULL){ //Se lista não criada, aborta o programa.
@@ -77,6 +79,30 @@ int main()
 
             case 3: // Buscar contato [Codigo]
                 printf("\nOpcao 3 selecionada.\n"); // Para debugg
+                do{
+                    printf("Buscar contato por codigo: ");
+                    scanf("%d", &codigo);
+                    x = consultaCodigo(li, codigo, &consulta_contato);
+                    if(x){
+                        printf("\nConsulta contato de codigo %d", consulta_contato.codigo);
+                        printf("\n\nNOVO CONTATO:");
+                        printf("\nCodigo: %d", consulta_contato.codigo);
+                        printf("\nNome: %s", consulta_contato.nome);
+                        printf("Empresa: %s", consulta_contato.empresa);
+                        printf("Departamento: %s", consulta_contato.departamento);
+                        printf("Telefone: %s", consulta_contato.telefone);
+                        printf("Celular: %s", consulta_contato.celular);
+                        printf("Email: %s\n", consulta_contato.email);
+                        option = -3;
+                    }else{
+                        printf("\nCodigo nao encontrado.");
+                        printf("\nRealizar uma nova busca? [1] SIM | [0] NAO: ");
+                        scanf("%d", &option);
+                        if(option == 0){
+                            option = -3;
+                        }
+                    }
+                }while(option != -3); // Código para sair do loop da opção 3
                 break;
 
             case 4: // Buscar contato [Nome]
@@ -97,7 +123,7 @@ int main()
 
             default: // Entradas inválidas
                 printf("\nEntrada invalida! Insira novamente...\n");
-                printf("\n%d", option);
+                printf("\nEntrada inserida: %d", option); // Para debug
                 break;
         }
         system("PAUSE");
