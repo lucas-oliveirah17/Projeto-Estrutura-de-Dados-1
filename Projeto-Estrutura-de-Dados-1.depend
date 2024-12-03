@@ -27,3 +27,15 @@
 
 1732641992 source:c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\relatorio_total.c
 
+1733177585 source:c:\users\aluno\documents\github\projeto-estrutura-de-dados-1\lista_contatos.c
+	<stdio.h>
+	<stdlib.h>
+	"lista_contatos.h"
+
+1733177585 c:\users\aluno\documents\github\projeto-estrutura-de-dados-1\lista_contatos.h
+
+1733177788 source:c:\users\aluno\documents\github\projeto-estrutura-de-dados-1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista_contatos.h"
+

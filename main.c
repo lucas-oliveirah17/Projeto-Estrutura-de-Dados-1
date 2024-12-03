@@ -121,7 +121,6 @@ int main()
     }while(option != 0); // Encerra o loop ao inserir a opção "Sair"
 
     apagaLista(li);
-    printf("\nPrograma encerrado\n\n");
-    system("PAUSE");
+    printf("\nPrograma encerrado!\n");
     return 0;
 }
