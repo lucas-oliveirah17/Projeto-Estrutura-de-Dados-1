@@ -27,6 +27,10 @@ int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por código na l
 void apresentaClientes(Lista li);
 
 void imprimirContato(CLIENTE cl); // Rotina para a impressão das informações de contato
+
+void salvaContatos(Lista *li, const char *nomeArquivo);
+
+void carregaContatos(Lista *li, const char *nomeArquivo);
 /*
 int tamanhoLista(Lista *li);
 

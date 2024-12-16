@@ -7,18 +7,20 @@ int main()
     int option; //Para as opções do menu
     int codigo; // Para pesquisa de contato por codigo
     int x; //Para código de erro
-    Lista *li; //Ponteiro para a lista
+    Lista *li; // Criando a lista
     CLIENTE novo_contato; //Para inserção de dados do novo contato
     CLIENTE consulta_contato; //Para Consulta de dados de contatos da lista
 
-    li = criaLista();
-    if(li == NULL){ //Se lista não criada, aborta o programa.
-        abortaPrograma();
+    li  = criaLista(); //Ponteiro para a lista
+    carregaContatos(li, "contatos.txt");
+
+    if (li == NULL) {
+        printf("Erro ao criar a lista.\n");
+        abortaPrograma();  // Chama a função de abortar o programa
     }
 
     do{
         system("cls"); // Limpa a tela no Windows
-
         printf(  "                            MENU"); // Inserir espaços ante das aspas para o texto do código ficar semelhante ao da saída
         printf("\n[1] - Adicionar novo contato  | [2] - Exibir todos os contatos");
         printf("\n[3] - Buscar contato [Codigo] | [4] - Buscar contato [Nome]");
@@ -120,7 +122,8 @@ int main()
         system("PAUSE");
     }while(option != 0); // Encerra o loop ao inserir a opção "Sair"
 
-    apagaLista(li);
+    salvaContatos(li, "contatos.txt");
+    apagaLista(li);  // Liberando a memória
     printf("\nPrograma encerrado!\n");
     return 0;
 }

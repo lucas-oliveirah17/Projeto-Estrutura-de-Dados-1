@@ -1,6 +1,7 @@
 // Arquivo lista_contatos.c
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "lista_contatos.h"
 
 struct elemento{
@@ -10,14 +11,16 @@ struct elemento{
 
 typedef struct elemento ELEM;
 
-
 Lista *criaLista(){
     Lista *li;
     //Armazenará o endereço do início do bloco alocado, e será
     //devolvido ao main()
     li = (Lista*) malloc(sizeof(Lista));
     //Se alocação ok, preenche o conteúdo que foi alocado com NULL
-    //
+    if(li == NULL) {
+        printf("Erro ao alocar memória para a lista.\n");
+        abortaPrograma(); // Esse erro é gerado quando a alocação falha
+    }
     if(li != NULL) {
         *li = NULL;
     }
@@ -157,6 +160,87 @@ void imprimirContato(CLIENTE cl){ // Rotina para a impressão das informações 
     printf(" Email: %s", cl.email);
     printf("|************************************************************|\n");
 };
+
+void salvaContatos(Lista *li, const char *nomeArquivo) {
+    if (li == NULL) {
+        printf("Erro na lista!\n");
+        abortaPrograma();
+    }
+
+    // Abre o arquivo no modo de acréscimo ("a")
+    FILE *arquivo = fopen(nomeArquivo, "a");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para escrita!\n");
+        return;
+    }
+
+    ELEM *atual = *li;
+    // Escreve cada contato no arquivo com os campos separados por ponto e vírgula
+    while (atual != NULL) {
+        // Usando fprintf para formatar a escrita no arquivo com ponto e vírgula
+        fprintf(arquivo, "%d;%s;%s;%s;%s;%s;%s\n",
+                atual->dados.codigo,
+                atual->dados.nome,
+                atual->dados.empresa,
+                atual->dados.departamento,
+                atual->dados.telefone,
+                atual->dados.celular,
+                atual->dados.email);
+        atual = atual->prox;
+    }
+
+    fclose(arquivo);
+    printf("\nContatos salvos com sucesso no arquivo '%s'.\n", nomeArquivo);
+}
+
+void carregaContatos(Lista *li, const char *nomeArquivo) {
+    if (li == NULL) {
+        printf("Erro na lista!\n");
+        abortaPrograma();
+    }
+
+    printf("\nCarregando Contatos\n");
+    FILE *arquivo = fopen(nomeArquivo, "r");
+    if (arquivo == NULL) {
+        printf("Arquivo não encontrado, nenhum contato foi carregado.\n");
+        return;
+    }
+
+    CLIENTE cl;
+    char buffer[256];
+
+    while (fgets(buffer, sizeof(buffer), arquivo)) {
+        // Limpa qualquer possível lixo no buffer, incluindo quebras de linha extras
+        buffer[strcspn(buffer, "\n")] = '\0';  // Remove o \n no final da string
+
+        // Lê os dados do arquivo separados por ';'
+        int camposLidos = sscanf(buffer, "%d;%99[^;];%99[^;];%99[^;];%99[^;];%99[^;];%99[^\n]",
+                                  &cl.codigo,
+                                  cl.nome,
+                                  cl.empresa,
+                                  cl.departamento,
+                                  cl.telefone,
+                                  cl.celular,
+                                  cl.email);
+
+        // Verifica se todos os campos foram lidos corretamente
+        if (camposLidos != 7) {
+            printf("Erro ao ler a linha do arquivo: '%s'. Campos lidos: %d\n", buffer, camposLidos);
+            continue;  // Ignora a linha com erro e continua com a próxima
+        }
+
+        // Debug: imprime os dados lidos para verificar se estão corretos
+        printf("Lido: Codigo=%d, Nome=%s, Empresa=%s, Departamento=%s, Telefone=%s, Celular=%s, Email=%s\n",
+               cl.codigo, cl.nome, cl.empresa, cl.departamento, cl.telefone, cl.celular, cl.email);
+
+        // Insere os dados lidos de forma ordenada
+        insereOrdenado(li, cl);
+    }
+
+    fclose(arquivo);
+    printf("\nContatos carregados do arquivo '%s'.\n", nomeArquivo);
+}
+
 
 /*
 int tamanhoLista(Lista *li) {
