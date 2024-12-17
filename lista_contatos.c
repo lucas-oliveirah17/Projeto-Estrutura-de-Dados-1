@@ -133,15 +133,7 @@ void apresentaClientes(Lista li){
 
     // Apresenta os clientes cadastrados
     while(li != NULL){
-        printf("|************************************************************************\n");
-        printf("|*|Codigo: %d\n", li->dados.codigo);
-        printf("|*|Nome: %s", li->dados.nome);
-        printf("|*|Empresa: %s", li->dados.empresa);
-        printf("|*|Departemento: %s", li->dados.departamento);
-        printf("|*|Telefone: %s", li->dados.telefone);
-        printf("|*|Celular: %s", li->dados.celular);
-        printf("|*|E-mail: %s", li->dados.email);
-        printf("|************************************************************************\n");
+        imprimirContato(li->dados);
         li = li->prox;
     }
 }
@@ -228,7 +220,6 @@ int editaContato(Lista *li, int cod){
         //*cl = no->dados;
         return 1;
     }
-
 }
 
 /*
