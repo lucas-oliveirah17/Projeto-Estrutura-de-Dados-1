@@ -4,11 +4,11 @@
 
 int main()
 {
-    int option; //Para as op��es do menu
+    int option; //Para as opções do menu
     int codigo; // Para pesquisa de contato por codigo
-    int x; //Para c�digo de erro
-    Lista *li; // Criando a lista
-    CLIENTE novo_contato; //Para inser��o de dados do novo contato
+    int x; //Para código de erro
+    Lista *li; //Ponteiro para a lista
+    CLIENTE novo_contato; //Para inserção de dados na lista de contato
     CLIENTE consulta_contato; //Para Consulta de dados de contatos da lista
 
     li  = criaLista(); //Ponteiro para a lista
@@ -16,19 +16,19 @@ int main()
 
     if (li == NULL) {
         printf("Erro ao criar a lista.\n");
-        abortaPrograma();  // Chama a fun��o de abortar o programa
+        abortaPrograma();  // Chama a função de abortar o programa
     }
 
     do{
         system("cls"); // Limpa a tela no Windows
-        printf(  "                            MENU"); // Inserir espa�os ante das aspas para o texto do c�digo ficar semelhante ao da sa�da
+        printf(  "                            MENU"); // Inserir espaços ante das aspas para o texto do código ficar semelhante ao da saída
         printf("\n[1] - Adicionar novo contato  | [2] - Exibir todos os contatos");
         printf("\n[3] - Buscar contato [Codigo] | [4] - Buscar contato [Nome]");
         printf("\n[5] - Editar contato          | [6] - Remover contato");
         printf("\n[0] - Sair\n");
 
         printf("\nEntrada: ");
-        scanf(" %d", &option); // Ler a entrada do usu�rio para escolha de op��es
+        scanf(" %d", &option); // Ler a entrada do usuário para escolha de opções
 
         switch(option){
             case 1: // Adicionar novo contato
@@ -38,45 +38,23 @@ int main()
 
                 printf("\nCodigo: ");
                 scanf("%d", &novo_contato.codigo);
-                printf("Nome: ");
-                getchar();
-                fgets(novo_contato.nome, sizeof(novo_contato.nome) - 1, stdin);
-                printf("Empresa: ");
-                fgets(novo_contato.empresa, sizeof(novo_contato.empresa) - 1, stdin);
-                printf("Departamento: ");
-                fgets(novo_contato.departamento, sizeof(novo_contato.departamento) - 1, stdin);
-                printf("Telefone:");
-                fgets(novo_contato.telefone, sizeof(novo_contato.telefone) - 1, stdin);
-                printf("Celular: ");
-                fgets(novo_contato.celular, sizeof(novo_contato.celular) - 1, stdin);
-                printf("Email: ");
-                fgets(novo_contato.email, sizeof(novo_contato.email) - 1, stdin);
+                if(consultaCodigo(li, novo_contato.codigo, &consulta_contato)){ // Verifica se há um cliente cadastro com o código
+                    printf("\nJa exite um cliente com esse codigo na lista.\n");
+                    break;
+                }
 
-                /* // Para debug
-                printf("\n\nNOVO CONTATO:");
-                printf("\nCodigo: %d", novo_contato.codigo);
-                printf("\nNome: %s", novo_contato.nome);
-                printf("Empresa: %s", novo_contato.empresa);
-                printf("Departamento: %s", novo_contato.departamento);
-                printf("Telefone: %s", novo_contato.telefone);
-                printf("Celular: %s", novo_contato.celular);
-                printf("Email: %s", novo_contato.email);
-                */
+                novo_contato = coletaDados(novo_contato.codigo); // Coleta dados para o novo contato
 
                 x = insereOrdenado(li, novo_contato);
                 if(x){
                     printf("\nInserido contato do cliente de codigo %d\n", novo_contato.codigo);
                 }else{
-                    printf("\nErro. N�o foi possivel adicionar novo contato.\n");
+                    printf("\nErro. Não foi possivel adicionar novo contato.\n");
                 }
-
                 break;
 
             case 2: // Exibir todos os contatos
-                printf("\nOpcao 2 selecionada.\n"); // Para debugg
-
                 apresentaClientes(*li);
-
                 break;
 
             case 3: // Buscar contato [Codigo]
@@ -86,16 +64,24 @@ int main()
                     x = consultaCodigo(li, codigo, &consulta_contato);
                     if(x){
                         imprimirContato(consulta_contato);
-                        option = -3;
+                        break;
                     }else{
                         printf("\nCodigo nao encontrado.");
-                        printf("\nRealizar uma nova busca? [1] SIM | [0] NAO: ");
-                        scanf("%d", &option);
+                        while(1){
+                            printf("\nRealizar uma nova busca? [1] SIM | [0] NAO: ");
+                            scanf("%d", &option);
+                            if(option == 1 || option == 0){
+                                break;
+                            }
+                            printf("\nEntrada invalida!\n");
+                        }
+
                         if(option == 0){
-                            option = -3;
+                            option = -1;
+                            break;
                         }
                     }
-                }while(option != -3); // C�digo para sair do loop da op��o 3
+                }while(option != -3); // Código para sair do loop da opção 3
                 break;
 
             case 4: // Buscar contato [Nome]
@@ -104,26 +90,82 @@ int main()
 
             case 5: // Editar contato
                 printf("\nOpcao 5 selecionada.\n"); // Para debugg
+                printf("\nEditar contato de codigo: ");
+                scanf("%d", &codigo);
+                x = consultaCodigo(li, codigo, &consulta_contato);
+                if(x){
+                        imprimirContato(consulta_contato);
+
+                        while(1){
+                            printf("\nEditar contato? [1] SIM | [0] NAO: ");
+                            scanf("%d", &option);
+                            if(option == 1){
+                                x = editaContato(li, codigo);
+                                if(x){
+                                    printf("\nDados editado.\n");
+                                }
+                                else{
+                                    printf("\nErro. Falha na edicao.\n");
+                                }
+                                break; // Para sair do loop
+                            }else if(option == 0){
+                                printf("\nOperacao cancelada.\n");
+                                option = -1;
+                                break; // Para sair do loop
+                            }else{
+                                printf("\nEntrada invalida!\n");
+                            }
+                        }
+                }
+
                 break;
 
             case 6: // Remover contato
-                printf("\nOpcao 6 selecionada.\n"); // Para debugg
+                do{
+                    printf("Remover contato de codigo: ");
+                    scanf("%d", &codigo);
+                    x = consultaCodigo(li, codigo, &consulta_contato);
+                    if(x){
+                        imprimirContato(consulta_contato);
+                        printf("\nExcluir contato? [1] SIM | [0] NAO: ");
+                        scanf("%d", &option);
+                        if(option == 1) {
+                            x = removeOrdenado(li, codigo);
+                            if(x){
+                                printf("\nContato de codigo %d removido!\n", x);
+                                //option = -3;
+                                break;
+                            }else{
+                                printf("\nErro! Contato nao removido.\n");
+                            }
+                        }else if(option == 0){
+                            printf("\nOperacao cancelada.\n");
+                            option = -1;
+                            //option = -3;
+                            break;
+                        }else{
+                            printf("\nEntrada invalida!\n");
+                        }
+                    }else{
+                        printf("\nCodigo nao encontrado.\n");
+                        break;
+                    }
+                }while(option != -3); // Código para sair do loop da opção 3
                 break;
 
-            case 0: // Remover contato
-                printf("\nOpcao 0 selecionada.\n"); // Para debugg
+            case 0: // REncerrar programa
                 break;
 
-            default: // Entradas inv�lidas
+            default: // Entradas inválidas
                 printf("\nEntrada invalida! Insira novamente...\n");
-                printf("\nEntrada inserida: %d", option); // Para debug
+                printf("\nEntrada inserida: %d (DEBUG)\n", option); // Para debug
                 break;
         }
         system("PAUSE");
-    }while(option != 0); // Encerra o loop ao inserir a op��o "Sair"
+    }while(option != 0); // Encerra o loop ao inserir a opção "Sair"
 
     salvaContatos(li, "contatos.txt");
-    apagaLista(li);  // Liberando a mem�ria
+    apagaLista(li);  // Liberando a memória
     printf("\nPrograma encerrado!\n");
     return 0;
 }
