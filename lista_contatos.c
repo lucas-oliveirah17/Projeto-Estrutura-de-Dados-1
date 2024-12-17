@@ -159,8 +159,8 @@ void salvaContatos(Lista *li, const char *nomeArquivo) {
         abortaPrograma();
     }
 
-    // Abre o arquivo para escrita no modo de sobrescrição ("w")
-    FILE *arquivoEscrita = fopen(nomeArquivo, "w");
+    // Abre o arquivo para escrita no modo binário ("wb")
+    FILE *arquivoEscrita = fopen(nomeArquivo, "wb");
     if (arquivoEscrita == NULL) {
         printf("Erro ao abrir o arquivo para escrita!\n");
         return;
@@ -168,43 +168,15 @@ void salvaContatos(Lista *li, const char *nomeArquivo) {
 
     ELEM *atual = *li;
 
-    // Escreve cada contato no arquivo com os campos separados por ponto e vírgula
+    // Escreve cada contato no arquivo binário
     while (atual != NULL) {
-        // Remover o '\n' do final das strings antes de escrever
-        if (atual->dados.nome[strlen(atual->dados.nome) - 1] == '\n') {
-            atual->dados.nome[strlen(atual->dados.nome) - 1] = '\0';
-        }
-        if (atual->dados.empresa[strlen(atual->dados.empresa) - 1] == '\n') {
-            atual->dados.empresa[strlen(atual->dados.empresa) - 1] = '\0';
-        }
-        if (atual->dados.departamento[strlen(atual->dados.departamento) - 1] == '\n') {
-            atual->dados.departamento[strlen(atual->dados.departamento) - 1] = '\0';
-        }
-        if (atual->dados.telefone[strlen(atual->dados.telefone) - 1] == '\n') {
-            atual->dados.telefone[strlen(atual->dados.telefone) - 1] = '\0';
-        }
-        if (atual->dados.celular[strlen(atual->dados.celular) - 1] == '\n') {
-            atual->dados.celular[strlen(atual->dados.celular) - 1] = '\0';
-        }
-        if (atual->dados.email[strlen(atual->dados.email) - 1] == '\n') {
-            atual->dados.email[strlen(atual->dados.email) - 1] = '\0';
-        }
-
-        // Usando fprintf para formatar a escrita no arquivo com ponto e vírgula
-        fprintf(arquivoEscrita, "%d;%s;%s;%s;%s;%s;%s\n",
-                atual->dados.codigo,
-                atual->dados.nome,
-                atual->dados.empresa,
-                atual->dados.departamento,
-                atual->dados.telefone,
-                atual->dados.celular,
-                atual->dados.email);
-
+        // Escreve os dados do cliente diretamente no arquivo binário
+        fwrite(&atual->dados, sizeof(CLIENTE), 1, arquivoEscrita);
         atual = atual->prox;
     }
 
     fclose(arquivoEscrita);
-    printf("\nContatos salvos com sucesso no arquivo '%s'.\n", nomeArquivo);
+    printf("\nContatos salvos com sucesso no arquivo binário '%s'.\n", nomeArquivo);
 }
 
 
@@ -215,61 +187,22 @@ void carregaContatos(Lista *li, const char *nomeArquivo) {
     }
 
     printf("\nCarregando Contatos\n");
-    FILE *arquivo = fopen(nomeArquivo, "r");
+    FILE *arquivo = fopen(nomeArquivo, "rb");
     if (arquivo == NULL) {
         printf("Arquivo não encontrado, nenhum contato foi carregado.\n");
         return;
     }
 
     CLIENTE cl;
-    char buffer[256];
 
-    while (fgets(buffer, sizeof(buffer), arquivo)) {
-        // Limpa qualquer possível lixo no buffer, incluindo quebras de linha extras
-        buffer[strcspn(buffer, "\n")] = '\0';  // Remove o \n no final da string
-
-        // Lê os dados do arquivo separados por ';'
-        int camposLidos = sscanf(buffer, "%d;%99[^;];%99[^;];%99[^;];%99[^;];%99[^;];%99[^\n]",
-                                  &cl.codigo,
-                                  cl.nome,
-                                  cl.empresa,
-                                  cl.departamento,
-                                  cl.telefone,
-                                  cl.celular,
-                                  cl.email);
-
-        // Verifica se todos os campos foram lidos corretamente
-        if (camposLidos != 7) {
-            printf("\nErro ao ler a linha do arquivo: '%s'. Campos lidos: %d\n", buffer, camposLidos);
-            continue;  // Ignora a linha com erro e continua com a próxima
-        }
-
-        // Adiciona o '\n' no final de cada string lida
-        if (cl.nome[strlen(cl.nome) - 1] != '\n') {
-            strcat(cl.nome, "\n");
-        }
-        if (cl.empresa[strlen(cl.empresa) - 1] != '\n') {
-            strcat(cl.empresa, "\n");
-        }
-        if (cl.departamento[strlen(cl.departamento) - 1] != '\n') {
-            strcat(cl.departamento, "\n");
-        }
-        if (cl.telefone[strlen(cl.telefone) - 1] != '\n') {
-            strcat(cl.telefone, "\n");
-        }
-        if (cl.celular[strlen(cl.celular) - 1] != '\n') {
-            strcat(cl.celular, "\n");
-        }
-        if (cl.email[strlen(cl.email) - 1] != '\n') {
-            strcat(cl.email, "\n");
-        }
-
-        // Insere os dados lidos de forma ordenada
+    // Lê os dados do arquivo binário e os insere na lista
+    while (fread(&cl, sizeof(CLIENTE), 1, arquivo) == 1) {
+        // Insere os dados lidos de forma ordenada na lista
         insereOrdenado(li, cl);
     }
 
     fclose(arquivo);
-    printf("\nContatos carregados do arquivo '%s'.\n", nomeArquivo);
+    printf("\nContatos carregados do arquivo binário '%s'.\n", nomeArquivo);
 }
 
 int removeOrdenado(Lista *li, int cod){
