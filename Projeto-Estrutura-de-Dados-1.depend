@@ -52,3 +52,16 @@
 	<stdlib.h>
 	"lista_contatos.h"
 
+1734394303 source:c:\users\daniel\documents\matérias ads guarulhos\estruturadedados\projeto-estrutura-de-dados-1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista_contatos.h"
+
+1734394303 c:\users\daniel\documents\matérias ads guarulhos\estruturadedados\projeto-estrutura-de-dados-1\lista_contatos.h
+
+1734444918 source:c:\users\daniel\documents\matérias ads guarulhos\estruturadedados\projeto-estrutura-de-dados-1\lista_contatos.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lista_contatos.h"
+

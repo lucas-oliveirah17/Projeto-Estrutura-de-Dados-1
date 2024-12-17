@@ -163,39 +163,103 @@ void imprimirContato(CLIENTE cl){ // Rotina para a impressão das informações 
 
 void salvaContatos(Lista *li, const char *nomeArquivo) {
     if (li == NULL) {
-        printf("Erro na lista!\n");
+        printf("Erro na lista! LI=NULL\n");
         abortaPrograma();
     }
 
-    // Abre o arquivo no modo de acréscimo ("a")
-    FILE *arquivo = fopen(nomeArquivo, "a");
-    if (arquivo == NULL) {
+    // Abre o arquivo no modo leitura ("r") para verificar se já existem contatos com o mesmo código
+    FILE *arquivoLeitura = fopen(nomeArquivo, "r");
+    if (arquivoLeitura == NULL) {
+        // Caso o arquivo não exista, podemos continuar criando o arquivo no modo de escrita
+        arquivoLeitura = fopen(nomeArquivo, "w");
+        if (arquivoLeitura == NULL) {
+            printf("Erro ao abrir o arquivo para leitura e escrita!\n");
+            return;
+        }
+    }
+
+    // Lista para armazenar os códigos dos contatos já salvos
+    int codigosSalvos[1000]; // Supondo que nunca teremos mais de 1000 contatos
+    int numCodigosSalvos = 0; // Contador de códigos salvos
+
+    // Lê os dados existentes no arquivo e armazena os códigos na lista
+    char buffer[256];
+    while (fgets(buffer, sizeof(buffer), arquivoLeitura)) {
+        int codigo;
+        // Lê o código do contato
+        sscanf(buffer, "%d", &codigo);
+        codigosSalvos[numCodigosSalvos++] = codigo;  // Armazena o código
+    }
+
+    fclose(arquivoLeitura);
+
+    // Abre o arquivo novamente, desta vez para escrita no modo de acréscimo ("a")
+    FILE *arquivoEscrita = fopen(nomeArquivo, "a");
+    if (arquivoEscrita == NULL) {
         printf("Erro ao abrir o arquivo para escrita!\n");
         return;
     }
 
     ELEM *atual = *li;
+
     // Escreve cada contato no arquivo com os campos separados por ponto e vírgula
     while (atual != NULL) {
-        // Usando fprintf para formatar a escrita no arquivo com ponto e vírgula
-        fprintf(arquivo, "%d;%s;%s;%s;%s;%s;%s\n",
-                atual->dados.codigo,
-                atual->dados.nome,
-                atual->dados.empresa,
-                atual->dados.departamento,
-                atual->dados.telefone,
-                atual->dados.celular,
-                atual->dados.email);
+        int codigoAtual = atual->dados.codigo;
+        int existe = 0;
+
+        // Verifica se o código já foi salvo antes
+        for (int i = 0; i < numCodigosSalvos; i++) {
+            if (codigosSalvos[i] == codigoAtual) {
+                existe = 1;  // Contato com esse código já foi salvo
+                break;
+            }
+        }
+
+        if (!existe) {
+            // Adiciona o código atual à lista de códigos salvos
+            codigosSalvos[numCodigosSalvos++] = codigoAtual;
+
+            // Remover o '\n' do final das strings antes de escrever
+            if (atual->dados.nome[strlen(atual->dados.nome) - 1] == '\n') {
+                atual->dados.nome[strlen(atual->dados.nome) - 1] = '\0';
+            }
+            if (atual->dados.empresa[strlen(atual->dados.empresa) - 1] == '\n') {
+                atual->dados.empresa[strlen(atual->dados.empresa) - 1] = '\0';
+            }
+            if (atual->dados.departamento[strlen(atual->dados.departamento) - 1] == '\n') {
+                atual->dados.departamento[strlen(atual->dados.departamento) - 1] = '\0';
+            }
+            if (atual->dados.telefone[strlen(atual->dados.telefone) - 1] == '\n') {
+                atual->dados.telefone[strlen(atual->dados.telefone) - 1] = '\0';
+            }
+            if (atual->dados.celular[strlen(atual->dados.celular) - 1] == '\n') {
+                atual->dados.celular[strlen(atual->dados.celular) - 1] = '\0';
+            }
+            if (atual->dados.email[strlen(atual->dados.email) - 1] == '\n') {
+                atual->dados.email[strlen(atual->dados.email) - 1] = '\0';
+            }
+
+            // Usando fprintf para formatar a escrita no arquivo com ponto e vírgula
+            fprintf(arquivoEscrita, "%d;%s;%s;%s;%s;%s;%s\n",
+                    atual->dados.codigo,
+                    atual->dados.nome,
+                    atual->dados.empresa,
+                    atual->dados.departamento,
+                    atual->dados.telefone,
+                    atual->dados.celular,
+                    atual->dados.email);
+        }
         atual = atual->prox;
     }
 
-    fclose(arquivo);
+    fclose(arquivoEscrita);
     printf("\nContatos salvos com sucesso no arquivo '%s'.\n", nomeArquivo);
 }
 
+
 void carregaContatos(Lista *li, const char *nomeArquivo) {
     if (li == NULL) {
-        printf("Erro na lista!\n");
+        printf("Erro na lista! LI=NULL\n");
         abortaPrograma();
     }
 
@@ -229,9 +293,25 @@ void carregaContatos(Lista *li, const char *nomeArquivo) {
             continue;  // Ignora a linha com erro e continua com a próxima
         }
 
-        // Debug: imprime os dados lidos para verificar se estão corretos
-        printf("Lido: Codigo=%d, Nome=%s, Empresa=%s, Departamento=%s, Telefone=%s, Celular=%s, Email=%s\n",
-               cl.codigo, cl.nome, cl.empresa, cl.departamento, cl.telefone, cl.celular, cl.email);
+        // Adiciona o '\n' no final de cada string lida
+        if (cl.nome[strlen(cl.nome) - 1] != '\n') {
+            strcat(cl.nome, "\n");
+        }
+        if (cl.empresa[strlen(cl.empresa) - 1] != '\n') {
+            strcat(cl.empresa, "\n");
+        }
+        if (cl.departamento[strlen(cl.departamento) - 1] != '\n') {
+            strcat(cl.departamento, "\n");
+        }
+        if (cl.telefone[strlen(cl.telefone) - 1] != '\n') {
+            strcat(cl.telefone, "\n");
+        }
+        if (cl.celular[strlen(cl.celular) - 1] != '\n') {
+            strcat(cl.celular, "\n");
+        }
+        if (cl.email[strlen(cl.email) - 1] != '\n') {
+            strcat(cl.email, "\n");
+        }
 
         // Insere os dados lidos de forma ordenada
         insereOrdenado(li, cl);
