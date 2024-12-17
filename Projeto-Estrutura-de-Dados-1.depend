@@ -11,14 +11,15 @@
 	<stdlib.h>
 	"lista_contatos.h"
 
-1732645199 source:c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\lista_contatos.c
+1734462125 source:c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\lista_contatos.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	"lista_contatos.h"
 
-1732643991 c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\lista_contatos.h
+1734460926 c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\lista_contatos.h
 
-1732644921 source:c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\main.c
+1734460926 source:c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista_contatos.h"
