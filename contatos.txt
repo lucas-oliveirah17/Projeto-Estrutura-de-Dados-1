@@ -1,0 +1,2 @@
+1;Daniel;Cruzeiro;FUTEBOl;99999;88888;daniel@example.com
+2;Tramontina;Tramontina;Facas;99999;88888;tramontina@example.com

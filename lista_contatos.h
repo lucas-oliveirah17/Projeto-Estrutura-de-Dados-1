@@ -9,30 +9,36 @@ typedef struct cliente{
     char email[50];
 }CLIENTE;
 
-/*Ponteiro apontado pelo ponteiro da funÁ„o main*/
+/*Ponteiro apontado pelo ponteiro da fun√ß√£o main*/
 typedef struct elemento* Lista;
 
-Lista *criaLista(); //Aloca memÛria para a lista
+Lista *criaLista(); //Aloca mem√≥ria para a lista
 
-void apagaLista(Lista *li); //FunÁ„o que destrÛi a lista alocada.
+void apagaLista(Lista *li); //Fun√ß√£o que destr√≥i a lista alocada.
 
-void abortaPrograma(); //Aborta o programa se lista n„o alocada
+void abortaPrograma(); //Aborta o programa se lista n√£o alocada
 
-int listaVazia(Lista *li); // Verifica se lista est· vazia
+int listaVazia(Lista *li); // Verifica se lista est√° vazia
 
 int insereOrdenado(Lista *li, CLIENTE cl); // Insere ordenado, um novo contato
 
-int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por cÛdigo na lista
+int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por c√≥digo na lista
 
 void apresentaClientes(Lista li);
 
-void imprimirContato(CLIENTE cl); // Rotina para a impress„o das informaÁıes de contato
+void imprimirContato(CLIENTE cl); // Rotina para a impress√£o das informa√ß√µes de contato
 
-int removeOrdenado(Lista *li, int cod); // Remove contato por cÛdigo fornecido
 
-CLIENTE coletaDados(int cod); // FunÁ„o para coleta de dados
+void salvaContatos(Lista *li, const char *nomeArquivo);
 
-int editaContato(Lista *li, int cod); // FunÁ„o para editar contato
+void carregaContatos(Lista *li, const char *nomeArquivo);
+
+int removeOrdenado(Lista *li, int cod); // Remove contato por c√≥digo fornecido
+
+CLIENTE coletaDados(int cod); // Fun√ß√£o para coleta de dados
+
+int editaContato(Lista *li, int cod); // Fun√ß√£o para editar contato
+
 /*
 int tamanhoLista(Lista *li);
 

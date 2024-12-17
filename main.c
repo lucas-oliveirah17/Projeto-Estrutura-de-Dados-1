@@ -4,29 +4,31 @@
 
 int main()
 {
-    int option; //Para as opÁıes do menu
+    int option; //Para as op√ß√µes do menu
     int codigo; // Para pesquisa de contato por codigo
-    int x; //Para cÛdigo de erro
+    int x; //Para c√≥digo de erro
     Lista *li; //Ponteiro para a lista
-    CLIENTE novo_contato; //Para inserÁ„o de dados na lista de contato
+    CLIENTE novo_contato; //Para inser√ß√£o de dados na lista de contato
     CLIENTE consulta_contato; //Para Consulta de dados de contatos da lista
 
-    li = criaLista();
-    if(li == NULL){ //Se lista n„o criada, aborta o programa.
-        abortaPrograma();
+    li  = criaLista(); //Ponteiro para a lista
+    carregaContatos(li, "contatos.txt");
+
+    if (li == NULL) {
+        printf("Erro ao criar a lista.\n");
+        abortaPrograma();  // Chama a fun√ß√£o de abortar o programa
     }
 
     do{
         system("cls"); // Limpa a tela no Windows
-
-        printf(  "                            MENU"); // Inserir espaÁos ante das aspas para o texto do cÛdigo ficar semelhante ao da saÌda
+        printf(  "                            MENU"); // Inserir espa√ßos ante das aspas para o texto do c√≥digo ficar semelhante ao da sa√≠da
         printf("\n[1] - Adicionar novo contato  | [2] - Exibir todos os contatos");
         printf("\n[3] - Buscar contato [Codigo] | [4] - Buscar contato [Nome]");
         printf("\n[5] - Editar contato          | [6] - Remover contato");
         printf("\n[0] - Sair\n");
 
         printf("\nEntrada: ");
-        scanf(" %d", &option); // Ler a entrada do usu·rio para escolha de opÁıes
+        scanf(" %d", &option); // Ler a entrada do usu√°rio para escolha de op√ß√µes
 
         switch(option){
             case 1: // Adicionar novo contato
@@ -36,7 +38,7 @@ int main()
 
                 printf("\nCodigo: ");
                 scanf("%d", &novo_contato.codigo);
-                if(consultaCodigo(li, novo_contato.codigo, &consulta_contato)){ // Verifica se h· um cliente cadastro com o cÛdigo
+                if(consultaCodigo(li, novo_contato.codigo, &consulta_contato)){ // Verifica se h√° um cliente cadastro com o c√≥digo
                     printf("\nJa exite um cliente com esse codigo na lista.\n");
                     break;
                 }
@@ -47,7 +49,7 @@ int main()
                 if(x){
                     printf("\nInserido contato do cliente de codigo %d\n", novo_contato.codigo);
                 }else{
-                    printf("\nErro. N„o foi possivel adicionar novo contato.\n");
+                    printf("\nErro. N√£o foi possivel adicionar novo contato.\n");
                 }
                 break;
 
@@ -79,7 +81,7 @@ int main()
                             break;
                         }
                     }
-                }while(option != -3); // CÛdigo para sair do loop da opÁ„o 3
+                }while(option != -3); // C√≥digo para sair do loop da op√ß√£o 3
                 break;
 
             case 4: // Buscar contato [Nome]
@@ -148,22 +150,22 @@ int main()
                         printf("\nCodigo nao encontrado.\n");
                         break;
                     }
-                }while(option != -3); // CÛdigo para sair do loop da opÁ„o 3
+                }while(option != -3); // C√≥digo para sair do loop da op√ß√£o 3
                 break;
 
             case 0: // REncerrar programa
                 break;
 
-            default: // Entradas inv·lidas
+            default: // Entradas inv√°lidas
                 printf("\nEntrada invalida! Insira novamente...\n");
                 printf("\nEntrada inserida: %d (DEBUG)\n", option); // Para debug
                 break;
         }
         system("PAUSE");
-    }while(option != 0); // Encerra o loop ao inserir a opÁ„o "Sair"
+    }while(option != 0); // Encerra o loop ao inserir a op√ß√£o "Sair"
 
-    apagaLista(li);
-    printf("\nPrograma encerrado\n\n");
-    system("PAUSE");
+    salvaContatos(li, "contatos.txt");
+    apagaLista(li);  // Liberando a mem√≥ria
+    printf("\nPrograma encerrado!\n");
     return 0;
 }
