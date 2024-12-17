@@ -158,6 +158,79 @@ void imprimirContato(CLIENTE cl){ // Rotina para a impressão das informações 
     printf("|************************************************************|\n");
 };
 
+int removeOrdenado(Lista *li, int cod){
+    int codigo;
+    if(li == NULL){
+        abortaPrograma();
+    }
+    ELEM *ant, *no = *li;
+    //Não é necessário testar se a lista está vazia para
+    //remover, o while faz esse tratamento, quando testa se
+    //no != NULL.
+    while(no != NULL && no->dados.codigo != cod){
+        ant = no;
+        no = no->prox;
+    }
+    //Se o nó está parado na primeira posição, significa que
+    //a lista não foi percorrida. É o caso em que o elemento a
+    //ser removido é menor do que todos os outros na lista.
+    if(no == *li){
+        *li = no->prox;
+    }else{
+        ant->prox = no->prox;
+    }
+    //Remove no inínicio, meio e fim.
+    codigo = no->dados.codigo;
+    free(no);
+    return codigo;
+}
+
+CLIENTE coletaDados(int cod){
+    CLIENTE contato;
+    contato.codigo = cod;
+
+    printf("Nome: ");
+    getchar();
+    fgets(contato.nome, sizeof(contato.nome) - 1, stdin);
+    printf("Empresa: ");
+    fgets(contato.empresa, sizeof(contato.empresa) - 1, stdin);
+    printf("Departamento: ");
+    fgets(contato.departamento, sizeof(contato.departamento) - 1, stdin);
+    printf("Telefone:");
+    fgets(contato.telefone, sizeof(contato.telefone) - 1, stdin);
+    printf("Celular: ");
+    fgets(contato.celular, sizeof(contato.celular) - 1, stdin);
+    printf("Email: ");
+    fgets(contato.email, sizeof(contato.email) - 1, stdin);
+
+    return contato;
+}
+
+int editaContato(Lista *li, int cod){
+    if(li == NULL){
+        abortaPrograma();
+    }
+    ELEM *no = *li;
+    //PEnquanto nó for diferente de NULL, e o codigo na lista for diferente
+    //do codigo que procuro...
+    while(no != NULL && no->dados.codigo != cod){
+        no = no->prox;
+    }
+    if(no == NULL){
+        //Se ao final da busca, nó for igual a NULL< significa que o elemento
+        // buscado não existe na lista, ou a mesma está vazia
+        return 0;
+    }else{
+        //Se nó diferente de NULL, significa que o elemento buscado foi
+        //encontrado, e então, é só editar seu conteúdo
+
+        no->dados = coletaDados(cod);
+        //*cl = no->dados;
+        return 1;
+    }
+
+}
+
 /*
 int tamanhoLista(Lista *li) {
     if(li == NULL){
@@ -192,33 +265,6 @@ int listaCheia(Lista *li){
         abortaPrograma();
     }
     return 0;
-}
-
-int removeOrdenado(Lista *li, int mat){
-    int matricula;
-    if(li == NULL){
-        abortaPrograma();
-    }
-    ELEM *ant, *no = *li;
-    //Não é necessário testar se a lista está vazia para
-    //remover, o while faz esse tratamento, quando testa se
-    //no != NULL.
-    while(no != NULL && no->dados.matricula != mat){
-        ant = no;
-        no = no->prox;
-    }
-    //Se o nó está parado na primeira posição, significa que
-    //a lista não foi percorrida. É o caso em que o elemento a
-    //ser removido é menor do que todos os outros na lista.
-    if(no == *li){
-        *li = no->prox;
-    }else{
-        ant->prox = no->prox;
-    }
-    //Remove no inínicio, meio e fim.
-    matricula = no->dados.matricula;
-    free(no);
-    return matricula;
 }
 
 int consultaPosicao(Lista *li, int posicao, ALUNO *al){
