@@ -27,6 +27,12 @@ int consultaCodigo(Lista *li, int cod, CLIENTE *cl); // Consulta por código na l
 void apresentaClientes(Lista li);
 
 void imprimirContato(CLIENTE cl); // Rotina para a impressão das informações de contato
+
+int removeOrdenado(Lista *li, int cod); // Remove contato por código fornecido
+
+CLIENTE coletaDados(int cod); // Função para coleta de dados
+
+int editaContato(Lista *li, int cod); // Função para editar contato
 /*
 int tamanhoLista(Lista *li);
 
