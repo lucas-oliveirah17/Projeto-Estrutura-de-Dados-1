@@ -1,50 +1,54 @@
+// Arquivo main.c
+/*
+    Projeto - Lista de Contatos - IFSP GUARULHOS - ADS
+    NOME: Daniel Navarro Porto      Prontuário: GU3052958
+    NOME: Lucas Silva de Oliveira   Prontuário: GU3054314
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "lista_contatos.h"
 
 int main()
 {
-    int option; //Para as opções do menu
-    int codigo; // Para pesquisa de contato por codigo
-    int x; //Para código de erro
-    Lista *li; //Ponteiro para a lista
-    CLIENTE novo_contato; //Para inserção de dados na lista de contato
-    CLIENTE consulta_contato; //Para Consulta de dados de contatos da lista
+    int option; // Opções do menu
+    int codigo; // Para consuulta de contato por codigo
+    int x; // Código de erro
+    char name[50]; // Para consulta de nome
+    Lista *li; // Ponteiro para a lista
+    CLIENTE novo_contato; // Para inserção de dados na lista de contato
+    CLIENTE consulta_contato; // Para Consulta de dados de contatos da lista
 
-    li  = criaLista(); //Ponteiro para a lista
+    li  = criaLista(); // Criação da lista
+    // Carregar contatos a partir de um arquivo
     carregaContatos(li, "contatos.txt");
-
-    if (li == NULL) {
-        printf("Erro ao criar a lista.\n");
-        abortaPrograma();  // Chama a função de abortar o programa
-    }
 
     do{
         system("cls"); // Limpa a tela no Windows
-        printf(  "                            MENU"); // Inserir espaços ante das aspas para o texto do código ficar semelhante ao da saída
+        // Inserido espaços ante das aspas no primeiro printf para o texto do código ficar semelhante ao da saída
+        printf(  "                            MENU");
         printf("\n[1] - Adicionar novo contato  | [2] - Exibir todos os contatos");
         printf("\n[3] - Buscar contato [Codigo] | [4] - Buscar contato [Nome]");
         printf("\n[5] - Editar contato          | [6] - Remover contato");
-        printf("\n[0] - Sair\n");
+        printf("\n[0] - Sair");
+        printf("\nNumero de contatos: %d\n", tamanhoLista(li));
 
         printf("\nEntrada: ");
-        scanf(" %d", &option); // Ler a entrada do usuário para escolha de opções
+        scanf(" %d", &option); // Lê a opção do menu
 
         switch(option){
             case 1: // Adicionar novo contato
-                printf("\nOpcao 1 selecionada.\n"); // Para debugg
-
                 printf("\nNOVO CONTATO");
-
                 printf("\nCodigo: ");
-                scanf("%d", &novo_contato.codigo);
-                if(consultaCodigo(li, novo_contato.codigo, &consulta_contato)){ // Verifica se há um cliente cadastro com o código
+                x = scanf("%d", &novo_contato.codigo);
+                // Verifica se já existe um contato com esse código
+                if(consultaCodigo(li, novo_contato.codigo, &consulta_contato)){
                     printf("\nJa exite um cliente com esse codigo na lista.\n");
                     break;
                 }
-
-                novo_contato = coletaDados(novo_contato.codigo); // Coleta dados para o novo contato
-
+                // Coleta dados para o novo contato
+                novo_contato = coletaDados(novo_contato.codigo);
                 x = insereOrdenado(li, novo_contato);
                 if(x){
                     printf("\nInserido contato do cliente de codigo %d\n", novo_contato.codigo);
@@ -60,16 +64,19 @@ int main()
             case 3: // Buscar contato [Codigo]
                 do{
                     printf("Buscar contato de codigo: ");
-                    scanf("%d", &codigo);
+                    scanf("%d", &codigo); // Insere código para a consulta
                     x = consultaCodigo(li, codigo, &consulta_contato);
                     if(x){
+                        // Se encontrar
                         imprimirContato(consulta_contato);
                         break;
                     }else{
                         printf("\nCodigo nao encontrado.");
+
                         while(1){
                             printf("\nRealizar uma nova busca? [1] SIM | [0] NAO: ");
                             scanf("%d", &option);
+                            // Verifica entradas válidas pra sair do loop
                             if(option == 1 || option == 0){
                                 break;
                             }
@@ -77,47 +84,86 @@ int main()
                         }
 
                         if(option == 0){
-                            option = -1;
-                            break;
+                            // Coloca option para um valor diferente de 0
+                            option = OPCAO_NULA;
+                            break; // Sair do loop
                         }
                     }
-                }while(option != -3); // Código para sair do loop da opção 3
+                }while(1);
                 break;
 
             case 4: // Buscar contato [Nome]
-                printf("\nOpcao 4 selecionada.\n"); // Para debugg
+                do{
+                    printf("Buscar contato por nome: ");
+                    getchar(); // Limpeza de buffer
+                    fgets(name, sizeof(name) - 1, stdin);
+                    name[strcspn(name, "\n")] = '\0';  // Remove o '\n' da string, se presente
+
+                    x = consultaNome(li, name);
+                    if(x){
+                        // Se tiver resultado na busca, encerra o loop
+                        break;
+                    }else{
+                        printf("\nNome nao encontrado.");
+
+                        while(1){
+                            printf("\nRealizar uma nova busca? [1] SIM | [0] NAO: ");
+                            scanf("%d", &option);
+                            // Verifica entradas válidas pra sair do loop
+                            if(option == 1 || option == 0){
+                                break;
+                            }
+                            printf("\nEntrada invalida!\n");
+                        }
+
+                        if(option == 0){
+                            // Coloca option para um valor diferente de 0
+                            option = OPCAO_NULA;
+                            break;
+                        }
+                    }
+                }while(1);
                 break;
 
             case 5: // Editar contato
-                printf("\nOpcao 5 selecionada.\n"); // Para debugg
                 printf("\nEditar contato de codigo: ");
                 scanf("%d", &codigo);
+                // Verifica se há contato com o código inserido
                 x = consultaCodigo(li, codigo, &consulta_contato);
                 if(x){
-                        imprimirContato(consulta_contato);
+                    // Imprime o contato a ser editado
+                    imprimirContato(consulta_contato);
 
-                        while(1){
-                            printf("\nEditar contato? [1] SIM | [0] NAO: ");
-                            scanf("%d", &option);
-                            if(option == 1){
-                                x = editaContato(li, codigo);
-                                if(x){
-                                    printf("\nDados editado.\n");
-                                }
-                                else{
-                                    printf("\nErro. Falha na edicao.\n");
-                                }
-                                break; // Para sair do loop
-                            }else if(option == 0){
-                                printf("\nOperacao cancelada.\n");
-                                option = -1;
-                                break; // Para sair do loop
-                            }else{
-                                printf("\nEntrada invalida!\n");
+                    while(1){
+                        // Confirmação para edição
+                        printf("\nEditar contato? [1] SIM | [0] NAO: ");
+                        scanf("%d", &option);
+                        if(option == 1){
+                            x = editaContato(li, codigo);
+                            if(x){
+                                printf("\nDados editado.\n");
                             }
-                        }
-                }
 
+                            else{
+                                printf("\nErro. Falha na edicao.\n");
+                            }
+                            break; // Para sair do loop
+
+                        }else if(option == 0){
+                            printf("\nOperacao cancelada.\n");
+                            // Coloca option para um valor diferente de 0
+                            option = OPCAO_NULA;
+                            break; // Para sair do loop
+
+                        }else{
+                            printf("\nEntrada invalida!\n");
+                        }
+                    }
+
+                }else{
+                    // Se a consulta falhar
+                    printf("\nCodigo nao encontrado.");
+                }
                 break;
 
             case 6: // Remover contato
@@ -125,8 +171,10 @@ int main()
                     printf("Remover contato de codigo: ");
                     scanf("%d", &codigo);
                     x = consultaCodigo(li, codigo, &consulta_contato);
+                    // Verifica se há contato com o código inserido
                     if(x){
                         imprimirContato(consulta_contato);
+                        // Confirmação para exclusão
                         printf("\nExcluir contato? [1] SIM | [0] NAO: ");
                         scanf("%d", &option);
                         if(option == 1) {
@@ -138,19 +186,22 @@ int main()
                             }else{
                                 printf("\nErro! Contato nao removido.\n");
                             }
+
                         }else if(option == 0){
                             printf("\nOperacao cancelada.\n");
-                            option = -1;
-                            //option = -3;
+                            // Coloca option para um valor diferente de 0
+                            option = OPCAO_NULA;
                             break;
+
                         }else{
                             printf("\nEntrada invalida!\n");
                         }
+
                     }else{
                         printf("\nCodigo nao encontrado.\n");
                         break;
                     }
-                }while(option != -3); // Código para sair do loop da opção 3
+                }while(1);
                 break;
 
             case 0: // REncerrar programa
@@ -158,7 +209,6 @@ int main()
 
             default: // Entradas inválidas
                 printf("\nEntrada invalida! Insira novamente...\n");
-                printf("\nEntrada inserida: %d (DEBUG)\n", option); // Para debug
                 break;
         }
         system("PAUSE");

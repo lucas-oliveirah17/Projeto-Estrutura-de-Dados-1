@@ -1,4 +1,6 @@
 // Arquivo lista_contatos.h
+#define OPCAO_NULA -1
+
 typedef struct cliente{
     int codigo;
     char nome[50];
@@ -39,20 +41,8 @@ CLIENTE coletaDados(int cod); // Função para coleta de dados
 
 int editaContato(Lista *li, int cod); // Função para editar contato
 
-/*
-int tamanhoLista(Lista *li);
+int consultaNome(Lista *li, char name[50]); // Função para consulta por nome
 
-int listaCheia(Lista *li);
+void toUpperString(char *string); // Função para converter todos os caracteres em maiusculo na string
 
-
-
-
-
-int removeOrdenado(Lista *li, int mat);
-
-int consultaPosicao(Lista *li, int posicao, ALUNO *al);
-
-
-
-ALUNO coletar_dados_aluno();
-*/
+int tamanhoLista(Lista *li); // Função para verificar tamanho da lista

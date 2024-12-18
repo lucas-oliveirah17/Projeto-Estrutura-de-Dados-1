@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "lista_contatos.h"
 
 struct elemento{
@@ -145,12 +146,12 @@ void imprimirContato(CLIENTE cl){ // Rotina para a impressão das informações 
     printf("\n|************************************************************|");
     printf("\n Codigo: %d", cl.codigo);
     printf("\n Nome: %s", cl.nome);
-    printf(" Empresa: %s", cl.empresa);
-    printf(" Departamento: %s", cl.departamento);
-    printf(" Telefone: %s", cl.telefone);
-    printf(" Celular: %s", cl.celular);
-    printf(" Email: %s", cl.email);
-    printf("|************************************************************|\n");
+    printf("\n Empresa: %s", cl.empresa);
+    printf("\n Departamento: %s", cl.departamento);
+    printf("\n Telefone: %s", cl.telefone);
+    printf("\n Celular: %s", cl.celular);
+    printf("\n Email: %s", cl.email);
+    printf("\n|************************************************************|\n");
 };
 
 void salvaContatos(Lista *li, const char *nomeArquivo) {
@@ -176,7 +177,7 @@ void salvaContatos(Lista *li, const char *nomeArquivo) {
     }
 
     fclose(arquivoEscrita);
-    printf("\nContatos salvos com sucesso no arquivo binário '%s'.\n", nomeArquivo);
+    printf("\nContatos salvos com sucesso no arquivo binario '%s'.\n", nomeArquivo);
 }
 
 
@@ -202,7 +203,7 @@ void carregaContatos(Lista *li, const char *nomeArquivo) {
     }
 
     fclose(arquivo);
-    printf("\nContatos carregados do arquivo binário '%s'.\n", nomeArquivo);
+    printf("\nContatos carregados do arquivo binario '%s'.\n", nomeArquivo);
 }
 
 int removeOrdenado(Lista *li, int cod){
@@ -232,23 +233,35 @@ int removeOrdenado(Lista *li, int cod){
     return codigo;
 }
 
-CLIENTE coletaDados(int cod){
+CLIENTE coletaDados(int cod) {
     CLIENTE contato;
     contato.codigo = cod;
 
     printf("Nome: ");
-    getchar();
+    getchar();  // Limpeza de buffer
     fgets(contato.nome, sizeof(contato.nome) - 1, stdin);
+    toUpperString(contato.nome);
+    contato.nome[strcspn(contato.nome, "\n")] = '\0';  // Remove o '\n' da string, se presente
+
     printf("Empresa: ");
     fgets(contato.empresa, sizeof(contato.empresa) - 1, stdin);
+    contato.empresa[strcspn(contato.empresa, "\n")] = '\0';  // Remove o '\n' da string, se presente
+
     printf("Departamento: ");
     fgets(contato.departamento, sizeof(contato.departamento) - 1, stdin);
-    printf("Telefone:");
+    contato.departamento[strcspn(contato.departamento, "\n")] = '\0';  // Remove o '\n' da string, se presente
+
+    printf("Telefone: ");
     fgets(contato.telefone, sizeof(contato.telefone) - 1, stdin);
+    contato.telefone[strcspn(contato.telefone, "\n")] = '\0';  // Remove o '\n' da string, se presente
+
     printf("Celular: ");
     fgets(contato.celular, sizeof(contato.celular) - 1, stdin);
+    contato.celular[strcspn(contato.celular, "\n")] = '\0';  // Remove o '\n' da string, se presente
+
     printf("Email: ");
     fgets(contato.email, sizeof(contato.email) - 1, stdin);
+    contato.email[strcspn(contato.email, "\n")] = '\0';  // Remove o '\n' da string, se presente
 
     return contato;
 }
@@ -277,95 +290,58 @@ int editaContato(Lista *li, int cod){
     }
 }
 
-/*
+int consultaNome(Lista *li, char *name){
+    if(li == NULL){
+        abortaPrograma();
+    }
+    toUpperString(name);
+    ELEM *no = *li;
+    //PEnquanto nó for diferente de NULL, e o nome na lista for diferente
+    //do nome que procuro...
+    while(no != NULL){
+        if(strcmp(no->dados.nome, name) == 0){
+             imprimirContato(no->dados);
+        }
+        no = no->prox;
+    }
+    if(no == NULL){
+        //Se ao final da busca, nó for igual a NULL< significa que o elemento
+        // buscado não existe na lista, ou a mesma está vazia
+        return 0;
+    }else{
+        //Se nó diferente de NULL, significa que o elemento buscado foi
+        //encontrado, e então, é só copiar seu conteúdo
+        //*cl = no->dados;
+        return 1;
+    }
+}
+
+void toUpperString(char *string){
+    while(*string && *string != '\0'){
+        *string = toupper((unsigned char)*string);
+        string++; // Avança para o próximo caractere
+    }
+}
+
 int tamanhoLista(Lista *li) {
     if(li == NULL){
         abortaPrograma();
     }
     int acum = 0;
-    //nó é um ponteiro auxiliar e recebe o 1º elemento da
-    //Lista. nó foi criado para se preservar o inicio da
-    //lista, porque se andarmos com a cabeça da lista,
-    //perderemos seu endereço de início. Sempre percorremos
-    //uma lista com elementos auxiliares, para não perdermos
-    //informações
+    /*nó é um ponteiro auxiliar e recebe o 1º elemento da
+    Lista. nó foi criado para se preservar o inicio da
+    lista, porque se andarmos com a cabeça da lista,
+    perderemos seu endereço de início. Sempre percorremos
+    uma lista com elementos auxiliares, para não perdermos
+    informações*/
     ELEM *no = *li;
     while(no != NULL){
-        //Enquanto nó não for NULL, incrementa o acumulador e
-        //se desloca para o próximo nó.
+        /*Enquanto nó não for NULL, incrementa o acumulador e
+        se desloca para o próximo nó.*/
         acum++;
         no = no->prox;
     }
-    //acum retorna a quantidade de elementos que existem
-    //na lista.
+    /*acum retorna a quantidade de elementos que existem
+    na lista.*/
     return acum;
 }
-
-int listaCheia(Lista *li){
-    //Em Listas Ligadas (dinâmicas encadeadas), não
-    //existe o conceito de lista cheia.
-    //Esta função é mantida apenas por questões de
-    //compatibilidade com outras estruturas do tipo
-    //Lista.
-    if(li == NULL){
-        abortaPrograma();
-    }
-    return 0;
-}
-
-int consultaPosicao(Lista *li, int posicao, ALUNO *al){
-    if(li == NULL){
-        abortaPrograma();
-    }
-    if(posicao <= 0){
-        return 0;
-    }
-    ELEM *no = *li;
-    int i = 1;
-    //Percorre toda a lista, incrementando 1 para cada elemento
-    //pesquisado
-    while(no != NULL && i < posicao){
-        no = no->prox;
-        i++;
-    }
-    if(no == NULL){
-        //Se nó for igual a NULL, o elemento não foi encontrado
-        //(posição não existe), ou lista estava vazia.
-        return 0;
-    }else{
-        //Mas se nó é diferente de NULL, siginifica que nó está
-        //apontando para o elemento procurado, e então, é só copiar
-        //os dados do elemento.
-        *al = no->dados;
-        return 1;
-    }
-}
-
-ALUNO coletar_dados_aluno(){
-    ALUNO al;
-    printf("\nMatrícula: ");
-    scanf("%d", &al.matricula);
-
-    do{
-        printf("Nota 1: ");
-        scanf("%f", &al.n1);
-        if(al.n1 < 0 || al.n1 > 10)
-            printf("Valor inválido! Somente valor de 0 à 10 são aceitos.\n");
-    }while(!(al.n1 >= 0 && al.n1 <= 10));
-
-    do{
-        printf("Nota 2: ");
-        scanf("%f", &al.n2);
-        if(al.n2 < 0 || al.n2 > 10)
-            printf("Valor inválido! Somente valor de 0 à 10 são aceitos.\n");
-    }while(!(al.n2 >= 0 && al.n2 <= 10));
-
-    do{
-        printf("Nota 3: ");
-        scanf("%f", &al.n3);
-        if(al.n3 < 0 || al.n3 > 10)
-            printf("Valor inválido! Somente valor de 0 à 10 são aceitos.\n");
-    }while(!(al.n3 >= 0 && al.n3 <= 10));
-    return al;
-}
-*/

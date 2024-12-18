@@ -1,14 +1,17 @@
 # depslib dependency file v1.0
-1734458426 source:z:\meu drive\projetos\projeto-estrutura-de-dados-1\lista_contatos.c
+1734491746 source:z:\meu drive\projetos\projeto-estrutura-de-dados-1\lista_contatos.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+	<ctype.h>
 	"lista_contatos.h"
 
-1734458181 z:\meu drive\projetos\projeto-estrutura-de-dados-1\lista_contatos.h
+1734488907 z:\meu drive\projetos\projeto-estrutura-de-dados-1\lista_contatos.h
 
-1734458562 source:z:\meu drive\projetos\projeto-estrutura-de-dados-1\main.c
+1734492210 source:z:\meu drive\projetos\projeto-estrutura-de-dados-1\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
 	"lista_contatos.h"
 
 1734463139 source:c:\users\daniel\documents\github\projeto-estrutura-de-dados-1\lista_contatos.c
