@@ -1,7 +1,7 @@
 # Projeto-Estrutura-de-Dados-1      
 <h3>Projeto final da disciplina Estrutura de Dados 1 (GRUEDA1) - IFSP Guarulhos</h3>
 
-<h4>🚀 Projeto em andamento! 🛠️</h4>
+<h4>🚀 PROJETO CONCLUÍDO! 🛠️</h4>
 
 <h2>Lista de Contatos</h2>
 
