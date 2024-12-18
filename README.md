@@ -2,6 +2,11 @@
 <h3>Projeto final da disciplina Estrutura de Dados 1 (GRUEDA1) - IFSP Guarulhos</h3>
 
 <h4>🚀 PROJETO CONCLUÍDO! 🛠️</h4>
+<h5>Colaboradores:</h5>
+<ul>
+  <li>Daniel Navarro Porto - https://github.com/danielnporto</li>
+  <li>Lucas Silva de Oliveira - https://github.com/lucas-oliveirah17/</li>
+</ul>
 
 <h2>Lista de Contatos</h2>
 
